@@ -1,0 +1,75 @@
+.paginatorMainPanel{
+ border-width:0px;
+ border-top-style:solid;
+ border-bottom-style:solid;
+ width:100%;
+ padding: 4px 0px 5px 0px;
+ background-color: #EDEEF0;
+ font-size:86%;
+}
+
+.paginatorMainPanel input,.paginatorMainPanel select
+{
+  font-size:120%;
+}
+
+.paginatorBlackCountButtons{
+ background-color:#4c5666;
+ text-align:center;
+ color:#ffffff;
+ height:20px;
+ width:20px;
+ font-weight:normal;
+ padding:0;
+ margin:0px 3px 0px 3px;
+}
+
+.paginatorWhiteCountButtons{
+ background-color:#EDEEF0;
+ text-align:center;
+ color:#4c5666;
+ height:20px;
+ width:20px;
+ font-weight:normal;
+ padding:0;
+ margin:0px 3px 0px 3px;
+}
+
+.paginatorButtons{
+ color:#4c5666;
+ text-align:center;
+ background-color:#EDEEF0;
+ height:20px;
+ width:20px;
+ font-weight:bolder;
+ padding:0;
+ margin:0px 5px 0px 5px;
+}
+
+.paginatorLeftPanel{
+  float:left;
+}
+.paginatorLeftPanel input{
+ margin:0px 5px 0px 5px;
+ width:25px;
+ text-align:center;
+}
+
+.paginatorRightPanel{
+  float:right;
+  margin:0px 5px 0px 5px;
+}
+
+.paginatorSorterPlace{
+ border-width:1px;
+ margin:0px 5px 0px 5px;
+ padding:0px 5px 0px 5px;
+ border-left-style:solid;
+ border-right-style:solid;
+}
+
+.paginatorUnitCount{
+  color: #258AA9;
+  margin: 0px 5px 0px 5px;
+
+}

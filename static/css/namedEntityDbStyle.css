@@ -1,0 +1,235 @@
+.tableHeaderBtn{
+	padding: 0; 
+	margin: 0; 
+	border:0; 
+	background-color: #258AA9; 
+	color: white;
+	cursor:pointer; 
+}
+
+.orangeTable{
+	width: 100%;
+	border-spacing: 0;
+	table-layout: fixed;
+}
+.orangeTableHeader{
+	height: 30px; 
+	background-color: #258AA9;
+}
+.orangeTableRow{
+	background-color: #edeef0;
+	padding: 0;
+	margin: 0;
+	padding-left: 100px;
+	height: 21px;
+}
+.orangeTable th{
+	font-weight: normal; 
+	color: white; 
+	font-size: 13px; 
+	padding-left: 10px; 
+	width: 50%;
+	border-bottom: 1px solid white;
+	border-right: 1px solid white;
+}
+.orangeTable td{
+	padding: 0;
+	margin: 0;
+	padding-left: 10px;
+	padding-right: 10px;
+	border-right: 1px solid #A7AAB3;
+	border-bottom: 1px solid #A7AAB3;
+}
+
+.orangeTableSmall{
+	width: 100%;
+	border-spacing: 0;
+	table-layout: fixed;
+}
+.orangeTableHeaderSmall{
+	height: 15px; 
+	background-color: #258AA9;
+}
+.orangeTableRowSmall{
+	background-color: #edeef0;
+	padding: 0;
+	margin: 0;
+	height: 11px;
+}
+.orangeTableSmall th{
+	font-weight: normal; 
+	color: white; 
+	font-size: 13px; 
+	padding-left: 10px; 
+	border-bottom: 1px solid white;
+	border-right: 1px solid white;
+}
+.orangeTableSmall td{
+	font-size: 13px; 
+	padding: 0;
+	margin: 0;
+	padding-left: 10px;
+	padding-right: 10px;
+	border-right: 1px solid #A7AAB3;
+	border-bottom: 1px solid #A7AAB3;
+}
+
+
+.close{
+	cursor: pointer;
+	float: right; 
+	padding: 5px;"
+}
+
+error{
+	color: #258AA9;
+}
+
+div.commonSearchTitle1{
+		height:29px;
+		background-color:#258AA9;
+		color: #ffffff;
+		font-size: 15px;
+		border-bottom: 1px solid white;
+	}
+	div.commonSearchTitle1 div{
+		padding: 5px 0px 5px 20px; 
+	}
+	div.mainHeaderLinks1{
+		height: 28px; 
+		background-color: #edeef0; 
+		border-top: 1px solid #f6f6f6; 
+		border-bottom: 1px solid #dcdddf;
+		color: #a5a9b2; 
+		font-family: Tahoma; 
+		font-size: 15px; 
+		font-weight: normal;
+	}
+	div.mainHeaderLinks1 label{
+		cursor: pointer; 
+		display: inline-block; 
+		padding: 5px 10px 5px 10px;
+	}
+	div.mainHeaderLinks1 input{
+		display: none;
+	}
+	div.mainHeaderSearch1{
+		height: 32px; 
+		background-color: #edeef0; 
+		color: #4C5769; 
+		font-family: Tahoma; 
+		font-size: 15px; 
+		font-weight: normal;
+		padding: 17px 30px 19px 30px;
+	}
+	div.mainHeaderSearch1 div div{
+		display: inline-block;
+		float: left;
+		margin-top: 6px;
+		margin-right: 5px;
+	}
+	input#inpName{
+		display: inline-block; 
+		float: left; 
+		height: 21px; 
+		width: 613px; 
+		border-right-width: 0;
+	}
+	input#inpBtn{
+		display: inline-block; 
+		float: left; 
+		background-image: url('/namedEntityDB/static/img/zoomglas.png'); 
+		background-repeat:no-repeat;
+		background-position:center; 
+		background-color: #5e6979;
+		width:25px;
+		height:25px;
+	}
+	
+	
+div.tabHeader{
+	height: 18px; 
+	background-color: #edeef0; 
+	padding: 6px; 
+	font-size: 15px;
+	margin-bottom: 10px;
+}
+
+div.tabHeader span.name{
+	color: #4e5768; 
+	text-transform: uppercase;
+}
+
+div.tabHeader span.name span{
+	margin-left: 20px;
+}
+	
+div.tabHeaderSmall{
+	height: 18px; 
+	background-color: #edeef0; 
+	padding: 6px; 
+	font-size: 14px;
+	margin-bottom: 5px;
+}
+
+div.tabHeaderSmall span.name{
+	color: #4e5768; 
+	text-transform: uppercase;
+}
+
+div.tabHeaderSmall span.name span{
+	margin-left: 20px;
+}
+
+div.tabHeaderSmall a{
+	font-size: 10px;
+}
+
+
+span.required{
+	color: red;
+}
+
+
+span.btnDelimiter{
+	float: right;
+	color: #a7aab3;
+}
+
+button.addBtn{
+	float: right;
+	border: none;
+	color: #ffffff;
+	background-color: #258AA9;
+	cursor: pointer;
+}
+
+input.editBtn{
+	float: right;
+	background-color: #EDEEF0;
+	color: #a7aab3;
+	border: none;
+	cursor: pointer;
+}
+
+form{
+	display: inline;
+	padding: 0;
+	margin: 0;
+}
+
+.orangeTableRow input{
+	display: inline;
+	padding: 0;
+	margin: 0;
+	font-size: 11px;
+}
+
+div#nameEntities{
+	position: absolute; 
+	width: 620px;
+	margin-top: -10px; 
+	background-color: white; 
+	padding: 10px; 
+	border: 1px solid #A5A9B2;
+}

@@ -1,0 +1,136 @@
+.headerGradient{
+  background-image: url("../img/Gradient_josla.jpg");
+  width:100%;
+  height: 30px;
+  position: absolute;
+}
+.commonSearchTitle{
+  height:22px;
+  background-color:#258AA9;
+  color: #ffffff;
+  padding: 4px 18px;
+  font-size: 15px;
+}
+.oldPortal, .oldPortal a {
+  float:right;
+  color: white;
+  font-size: 15px;
+  font-weight: normal;
+  padding-left: 10px;
+  text-decoration: underline;
+}
+
+.mainHeader{
+  width:100%;
+  position:relative;
+  z-index:1;
+}
+
+.mainHeaderRight{
+  width:801px;
+}
+
+.logo{
+  margin-right:12px;
+  padding: 0;
+  width:176px;
+  height:126px;
+  background-image: url("../img/logo.png");
+  background-repeat:no-repeat;
+  background-position:bottom;
+}
+
+.mainHeaderLangPanel{
+   float:right;
+   margin:0 0 4px 0;
+}
+
+.mainHeaderLanguageMenu a{
+  padding: 0px 5px 0px 5px;
+  font-weight: normal;
+}
+
+.mainHeaderUserMenu a{
+  padding: 0px 5px 0px 5px;
+  font-weight: normal;
+}
+
+.mainHeaderUserMenu .gwt-ListBox{
+  margin: 0;
+  position: absolute;
+  margin-left: -160px;
+}
+
+.mainHeaderLinks{
+  font-size: 15px;
+  background-color: #edeef0;
+  padding: 5px 5px 5px 15px;
+  width:100%;
+  height: 32px;
+  border-top: 1px solid #ffffff;
+  border-bottom: 1px solid #dcdddf;
+  color: #a5a9b2;
+}
+
+.mainHeaderLinks a{
+  padding: 4px;
+  color: #a5a9b2;
+  font-size: 15px;
+  font-weight: normal;
+}
+
+.mainHeaderLinks a:hover{
+  color: #258AA9;
+}
+
+.mainHeaderButtons{
+  margin-bottom:5px;
+  float: right;
+}
+
+.mainHeaderButtons div{
+	float: right;
+}
+ 
+.mainHeaderSearch{
+  padding:18px;
+  background-color: #edeef0;
+  color: #4c5769;
+  font-size:15px;
+}
+
+.mainHeaderQueryBox{
+  width:650px;
+  height:23px;
+}
+
+.mainHeaderSearchLabel{
+  font-size:13px;
+  font-weight: bold;
+  color:#4c5666;
+  width: 140px;
+  text-align: right;
+  padding-right: 10px;
+}
+
+/*.mainHeaderAdvSearch{
+  font-size:90%;
+  padding-left:20px;
+}
+*/
+.mainHeaderSearchBtn{
+ border-style:solid;
+ border-width:1px;
+ background-color: #5e6979;
+ border-color: #5e6979;
+ width:25px;
+ height:25px;
+ background-image: url("../img/zoomglas.png");
+ background-repeat:no-repeat;
+ background-position:center;
+ margin-right:15px;
+}
+
+.mainHeaderSearch a{
+  font-size:90%;
+}

@@ -1,0 +1,67 @@
+.content{
+  padding-top:5px;
+  width: 100%;
+}
+
+.contentWhole{
+  text-align:left;
+  min-height:400px;
+  width:992px;
+}
+
+.contentLeft{
+  width:181px;
+  float:left;
+  padding-right: 11px;
+}
+
+
+.contentLeftHeader{
+	border-top-style: solid;
+	border-bottom-style: solid;
+	border-width: 2px;
+	height:16px;
+	padding: 6px;
+	text-align: left;
+	font-size: 12px;
+	font-weight: bold;
+	color: #4C5666;
+	margin-bottom:5px;
+}
+
+.contentRight{
+  width:800px;
+  min-height: 800px;
+  margin-bottom: 10px;
+  float:right;
+  text-align:left;
+  position:relative;
+}
+
+.contentRightHeader{
+	border-top-style: solid;
+	border-bottom-style: solid;
+	border-width: 2px;
+	height:16px;
+	padding: 6px;
+	text-align: left;
+	font-size: 12px;
+	font-weight: bold;
+	color: #4C5666;
+	margin-bottom:5px;
+}
+
+.portalNews{
+width:191px;
+padding:20px 0px 10px 10px;
+text-align:left;
+border-style:solid;
+border-width:1px;
+}
+
+.closePortalNews{
+ float:right;
+ position:relative;
+ right:0px;
+ top:-20px;
+}

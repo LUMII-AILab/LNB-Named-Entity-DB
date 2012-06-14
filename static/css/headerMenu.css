@@ -1,0 +1,45 @@
+.headerMenu_0_lv{
+  height: 30px;  width: 87px;  background-repeat: no-repeat;  background-image: url("../img/menu/books_lv.png");
+}
+.headerMenu_0_lv:hover{
+  height: 30px;  width: 87px;  background-repeat: no-repeat;  background-image: url("../img/menu/books_lv_roll.png");
+}
+.headerMenu_1_lv{
+  height: 30px;  width: 88px;  background-repeat: no-repeat;  background-image: url("../img/menu/periodica_lv.png");
+}
+.headerMenu_1_lv:hover{
+  height: 30px;  width: 88px;  background-repeat: no-repeat;  background-image: url("../img/menu/periodica_lv_roll.png");
+}
+.headerMenu_2_lv{
+  height: 30px;  width: 73px;  background-repeat: no-repeat;  background-image: url("../img/menu/maps_lv.png");
+}
+.headerMenu_2_lv:hover{
+  height: 30px;  width: 73px;  background-repeat: no-repeat;  background-image: url("../img/menu/maps_lv_roll.png");
+}
+.headerMenu_3_lv{
+  height: 30px;  width: 66px;  background-repeat: no-repeat;  background-image: url("../img/menu/picts_lv.png");
+}
+.headerMenu_3_lv:hover{
+  height: 30px;  width: 66px;  background-repeat: no-repeat;  background-image: url("../img/menu/picts_lv_roll.png");
+}
+.headerMenu_4_lv{
+  height: 30px;  width: 107px;  background-repeat: no-repeat;  background-image: url("../img/menu/audiovideo_lv.png");
+}
+.headerMenu_4_lv:hover{
+  height: 30px;  width: 107px;  background-repeat: no-repeat;  background-image: url("../img/menu/audiovideo_lv_roll.png");
+}
+.headerMenu_5_lv{
+  height: 30px;  width: 103px;  background-repeat: no-repeat;  background-image: url("../img/menu/archive_lv.png");
+}
+.headerMenu_5_lv:hover{
+  height: 30px;  width: 103px;  background-repeat: no-repeat;  background-image: url("../img/menu/archive_lv_roll.png");
+}
+.headerMenu_6_lv{
+  height: 30px;  width: 95px;  background-repeat: no-repeat;  background-image: url("../img/menu/collections_lv.png");
+}
+.headerMenu_6_lv:hover{
+  height: 30px;  width: 95px;  background-repeat: no-repeat;  background-image: url("../img/menu/collections_lv_roll.png");
+}
+.headerMenu_7_lv{
+  height: 30px;  width: 111px;  background-repeat: no-repeat;  background-image: url("../img/menu/laboratory_lv_sel.png");
+}
