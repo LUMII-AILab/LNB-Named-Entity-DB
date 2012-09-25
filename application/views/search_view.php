@@ -7,9 +7,9 @@
 </div>
 
 <!-- start pagination -->
-<form id="paginatorForm" action="/namedEntityDB/browse/" method="POST">
+<form id="paginatorForm" action="/namedEntityDB/browse/" method="GET">
 	<input type="hidden" name="key_word" value="<?=$strKeyWord;?>" />
-	<?php foreach ($arrCategoriesPost as $intCategory) :?><input style="display: none" type='checkbox' name='category[]' checked="checked" value='<?=$intCategory?>' /><?php endforeach;?>
+	<input type="hidden" name='category' value='<?=$intCategoryID?>' />
 	<input type='hidden' name='order_by' value='<?=$strOrderBy?>' />
 	<input type='hidden' name='order_mode' value='<?=$strOrderMode?>' />
 	<input id="row_count_per_page" type='hidden' name='row_count_per_page' value='<?=$intRowCountPerPage?>' />
@@ -85,51 +85,51 @@
 		<table class="orangeTable"  >
 				<tr class='orangeTableHeader'>
 					<th style="width: 32%">
-						<form style='padding: 0; margin: 0;' action='/namedEntityDB/browse/search/' method='POST'>
-							<?php foreach ($arrCategoriesPost as $intCategory) :?><input style="display: none" type='checkbox' name='category[]' checked="checked" value='<?=$intCategory?>' /><?php endforeach;?>
+						<form style='padding: 0; margin: 0;' action='/namedEntityDB/browse/search/' method='GET'>
+							<input type='hidden' name='key_word' value='<?php if (isset($strKeyWord)) echo $strKeyWord; else echo ''?>' />
+							<input type='hidden' name='category' value='<?=$intCategoryID?>' />
 							<input type='hidden' name='order_by' value='name' />
 							<input type='hidden' name='order_mode' value='<?php if (isset($strOrderMode) && $strOrderMode == 'ASC') echo 'DESC'; else echo 'ASC';?>' />
-							<input type='hidden' name='key_word' value='<?php if (isset($strKeyWord)) echo $strKeyWord; else echo ''?>' />
 							<input id="row_count_per_page" type='hidden' name='row_count_per_page' value='<?=$intRowCountPerPage?>' />
 							<input class='tableHeaderBtn' <?php if ($strOrderBy == 'name') echo 'style="text-decoration: underline;"'?> type='submit' value='Nosaukums' />
 						</form>
 					</th>
 					<th style="width: 12%">
-						<form style='padding: 0; margin: 0;' action='/namedEntityDB/browse/search/' method='POST'>
-							<?php foreach ($arrCategoriesPost as $intCategory) :?><input style="display: none" type='checkbox' name='category[]' checked="checked" value='<?=$intCategory?>' /><?php endforeach;?>
+						<form style='padding: 0; margin: 0;' action='/namedEntityDB/browse/search/' method='GET'>
+							<input type='hidden' name='key_word' value='<?php if (isset($strKeyWord)) echo $strKeyWord; else echo ''?>' />
+							<input type='hidden' name='category' value='<?=$intCategoryID?>' />
 							<input type='hidden' name='order_by' value='occ' />
 							<input type='hidden' name='order_mode' value='<?php if (isset($strOrderMode) && $strOrderMode == 'ASC') echo 'DESC'; else echo 'ASC';?>' />
-							<input type='hidden' name='key_word' value='<?php if (isset($strKeyWord)) echo $strKeyWord; else echo ''?>' />
 							<input id="row_count_per_page" type='hidden' name='row_count_per_page' value='<?=$intRowCountPerPage?>' />
 							<input class='tableHeaderBtn' <?php if ($strOrderBy == 'occ') echo 'style="text-decoration: underline;"'?> type='submit' value='Sastopamība' />
 						</form>
 					</th>
 					<th style="width: 32%">
-						<form style='padding: 0; margin: 0;' action='/namedEntityDB/browse/search/' method='POST'>
-							<?php foreach ($arrCategoriesPost as $intCategory) :?><input style="display: none" type='checkbox' name='category[]' checked="checked" value='<?=$intCategory?>' /><?php endforeach;?>
+						<form style='padding: 0; margin: 0;' action='/namedEntityDB/browse/search/' method='GET'>
+							<input type='hidden' name='key_word' value='<?php if (isset($strKeyWord)) echo $strKeyWord; else echo ''?>' />
+							<input type='hidden' name='category' value='<?=$intCategoryID?>' />
 							<input type='hidden' name='order_by' value='def' />
 							<input type='hidden' name='order_mode' value='<?php if (isset($strOrderMode) && $strOrderMode == 'ASC') echo 'DESC'; else echo 'ASC';?>' />
-							<input type='hidden' name='key_word' value='<?php if (isset($strKeyWord)) echo $strKeyWord; else echo ''?>' />
 							<input id="row_count_per_page" type='hidden' name='row_count_per_page' value='<?=$intRowCountPerPage?>' />
 							<input class='tableHeaderBtn' <?php if ($strOrderBy == 'def') echo 'style="text-decoration: underline;"'?> type='submit' value='Definīcija' />
 						</form>
 					</th>
 					<th style="width: 12%;">
-						<form style='padding: 0; margin: 0;' action='/namedEntityDB/browse/search/' method='POST'>
-							<?php foreach ($arrCategoriesPost as $intCategory) :?><input style="display: none" type='checkbox' name='category[]' checked="checked" value='<?=$intCategory?>' /><?php endforeach;?>
+						<form style='padding: 0; margin: 0;' action='/namedEntityDB/browse/search/' method='GET'>
+							<input type='hidden' name='key_word' value='<?php if (isset($strKeyWord)) echo $strKeyWord; else echo ''?>' />
+							<input type='hidden' name='category' value='<?=$intCategoryID?>' />
 							<input type='hidden' name='order_by' value='time' />
 							<input type='hidden' name='order_mode' value='<?php if (isset($strOrderMode) && $strOrderMode == 'ASC') echo 'DESC'; else echo 'ASC';?>' />
-							<input type='hidden' name='key_word' value='<?php if (isset($strKeyWord)) echo $strKeyWord; else echo ''?>' />
 							<input id="row_count_per_page" type='hidden' name='row_count_per_page' value='<?=$intRowCountPerPage?>' />
 							<input class='tableHeaderBtn' <?php if ($strOrderBy == 'time') echo 'style="text-decoration: underline;"'?> type='submit' value='Laiks' />
 						</form>
 					</th>
 					<th style="width: 10%; border-right-width: 0;">
-						<form style='padding: 0; margin: 0;' action='/namedEntityDB/browse/search/' method='POST'>
-							<?php foreach ($arrCategoriesPost as $intCategory) :?><input style="display: none" type='checkbox' name='category[]' checked="checked" value='<?=$intCategory?>' /><?php endforeach;?>
+						<form style='padding: 0; margin: 0;' action='/namedEntityDB/browse/search/' method='GET'>
+							<input type='hidden' name='key_word' value='<?php if (isset($strKeyWord)) echo $strKeyWord; else echo ''?>' />
+							<input type='hidden' name='category' value='<?=$intCategoryID?>' />
 							<input type='hidden' name='order_by' value='category' />
 							<input type='hidden' name='order_mode' value='<?php if (isset($strOrderMode) && $strOrderMode == 'ASC') echo 'DESC'; else echo 'ASC';?>' />
-							<input type='hidden' name='key_word' value='<?php if (isset($strKeyWord)) echo $strKeyWord; else echo ''?>' />
 							<input id="row_count_per_page" type='hidden' name='row_count_per_page' value='<?=$intRowCountPerPage?>' />
 							<input class='tableHeaderBtn' <?php if ($strOrderBy == 'category') echo 'style="text-decoration: underline;"'?> type='submit' value='Kategorija' />
 						</form>

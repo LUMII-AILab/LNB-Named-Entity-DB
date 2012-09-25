@@ -1,21 +1,17 @@
-<?php 
-/**
- * Fails: authorize.php
- * Autors: Madara Paegle
- * Radīts: 2012.05.15.
- * Pēdējās izmaiņas: 2012.05.23.
- *
- */
+<?php
 if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 /*
-* Klase Authorize
-* Nolūks: lietotāja autorizēšana sistēmā
+ * KLASE
+ * Nosaukums: Authorize
+ * Funkcija: lietotāja autorizēšana sistēmā (Lietotājvārds: user, Parole: p)
 */
 class Authorize extends CI_Controller
 {
-	/*
-	 * Klases konstruktors.
+	/* 
+	 * FUNKCIJA
+	 * 
+	 * Klases konstruktors 
 	*/
 	public function __construct()
 	{
@@ -26,8 +22,15 @@ class Authorize extends CI_Controller
 	}
 	
 	/*
-	 * Funkcija izsauc ielogošanās formu un pārbauda, vai saņemtie lietotājvārda un paroles dati no lietotāja sakrīt ar vajadzīgo.
-	 * Ja ir pareizi, uzstāda lietotāja sesijas datus, kuri tiek pāarbaudīti pie funkcijām, kas nodrošina datu rediģēšanu.
+	 * FUNKCIJA
+	 * 
+	 * Nosaukums: login
+	 * Funkcija: izsauc autorizācijas formu un pārbauda, vai saņemtie lietotājvārda un paroles dati no lietotāja sakrīt ar vajadzīgo.
+	 * 			Ja ir pareizi, uzstāda lietotāja sesijas datus, kuri tiek pārbaudīti pie funkcijām, kas nodrošina datu rediģēšanu.
+	 * Parametri:
+	 * 			(POST)
+	 * 				user - lietotājvārds
+	 * 				passw - parole
 	*/
 	public function login()
 	{
@@ -48,16 +51,19 @@ class Authorize extends CI_Controller
 		$this->load->view('login_view', $arrOutputData);
 	}
 	
-	/*
-	 * Funkcija veic lietotāja ilogošanos no sistēmas - atstata lietotāja sesijas datus.
+	/* 
+	 * FUNKCIJA
+	 * 
+	 * Nosaukums: logout
+	 * Funkcija: veic lietotāja izlogošanos no sistēmas - atstata lietotāja sesijas datus. 
+	 * Parametri:
 	*/
 	public function logout()
 	{
 		$this->session->set_userdata("logged_in", FALSE);
 		$this->session->unset_userdata("loged_in");
 		
-		$this->load->view('login_view');
-		
+		$this->load->view('login_view');	
 	}
 }
 ?>

@@ -1,11 +1,4 @@
 ﻿<?php 
-/**
- * Fails: upload_xml_ielas.php
- * Autors: Madara Paegle
- * Radīts: 2012.02.20
- * Pēdējās izmaiņas: 2012.05.23.
- *
- */
 if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 /*

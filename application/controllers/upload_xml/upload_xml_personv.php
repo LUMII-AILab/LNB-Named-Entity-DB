@@ -1,4 +1,5 @@
-﻿<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+﻿<?php 
+if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 class Upload_xml_personv extends CI_Controller 
 {
@@ -20,9 +21,10 @@ class Upload_xml_personv extends CI_Controller
 			$reader->open('uploads/'.$file_name);
 			$doc = new DOMDocument;
 		
+			
 			while ($reader->read() && $reader->name !== 'record');
 		
-			while($reader->name === 'record')
+			while ($reader->name === 'record')
 			{
 				$record = simplexml_import_dom($doc->importNode($reader->expand(), true));
 		
@@ -34,7 +36,7 @@ class Upload_xml_personv extends CI_Controller
 				foreach ($record->datafield as $datafield)
 				{
 					foreach ($datafield->attributes() as $v)
-					{
+					{					
 						if ($v == '100')
 						{
 							$arrFields = array();
@@ -42,25 +44,25 @@ class Upload_xml_personv extends CI_Controller
 							{
 								foreach ($subfield->attributes() as $v1)
 								{
-									if ($v1 == 'a')
+									if ($v1 == 'a') // Personal name
 									{
 										$arrFields['a'] = $subfield;
 									}
-									elseif ($v1 == 'q')
+									elseif ($v1 == 'b') // Numeration
 									{
-										$arrFields['q'] = $subfield;
+										$arrFields['b'] = $subfield;
 									}
-									elseif ($v1 == 'd')
-									{
-										$arrFields['d'] = $subfield;
-									}
-									elseif ($v1 == 'c')
+									elseif ($v1 == 'c') // Titles and other words associated with a name
 									{
 										$arrFields['c'] = $subfield;
 									}
-									elseif ($v1 == 'b')
+									elseif ($v1 == 'd') // Dates associated with a name
 									{
-										$arrFields['b'] = $subfield;
+										$arrFields['d'] = $subfield;
+									}
+									elseif ($v1 == 'q') // Fuller form of name
+									{
+										$arrFields['q'] = $subfield;
 									}
 								}
 							}
@@ -70,75 +72,16 @@ class Upload_xml_personv extends CI_Controller
 							{
 								$bolIsObject = TRUE;
 							}
+							
+							foreach ($arrResult['names'] as $strName)
+							{
+								$arrVariants1[] = $strName;
+								$strDefinition = $strName;
+							}
 		
-							if (isset($arrResult['a']))
+							if (isset($arrResult['date']))
 							{
-								$arrVariants1[] = $arrResult['a'];
-								$strDefinition = $arrResult['a'];
-							}
-							if (isset($arrResult['q']))
-							{
-								$arrVariants1[] = $arrResult['q'];
-								$strDefinition = $arrResult['q'];
-							}
-							if (isset($arrResult['d']))
-							{
-								$strTime = $arrResult['d'];
-							}
-							if (isset($arrResult['b']))
-							{
-								$arrVariants1[] = $arrResult['b'];
-								$strDefinition = $arrResult['b'];
-							}
-							if (isset($arrResult['ab']))
-							{
-								$arrVariants1[] = $arrResult['ab'];
-								$strDefinition = $arrResult['ab'];
-							}
-							if (isset($arrResult['qb']))
-							{
-								$arrVariants1[] = $arrResult['qb'];
-								$strDefinition = $arrResult['qb'];
-							}
-							if (isset($arrResult['ac']))
-							{
-								foreach ($arrResult['ac'] as $strResult)
-								{
-									$arrVariants1[] = $strResult;
-									$strDefinition = $strResult;
-								}
-							}
-							if (isset($arrResult['abc']))
-							{
-								foreach ($arrResult['abc'] as $strResult)
-								{
-									$arrVariants1[] = $strResult;
-									$strDefinition = $strResult;
-								}
-							}
-							if (isset($arrResult['qc']))
-							{
-								foreach ($arrResult['qc'] as $strResult)
-								{
-									$arrVariants1[] = $strResult;
-									$strDefinition = $strResult;
-								}
-							}
-							if (isset($arrResult['qbc']))
-							{
-								foreach ($arrResult['qbc'] as $strResult)
-								{
-									$arrVariants1[] = $strResult;
-									$strDefinition = $strResult;
-								}
-							}
-							if (isset($arrResult['bc']))
-							{
-								foreach ($arrResult['bc'] as $strResult)
-								{
-									$arrVariants1[] = $strResult;
-									$strDefinition = $strResult;
-								}
+								$strTime = $arrResult['date'];
 							}
 						}
 						elseif ($v == '400')
@@ -173,60 +116,9 @@ class Upload_xml_personv extends CI_Controller
 		
 							$arrResult = $this->mergeFields($arrFields);
 		
-							if (isset($arrResult['a']))
+							foreach ($arrResult['names'] as $strName)
 							{
-								$arrVariants1[] = $arrResult['a'];
-							}
-							if (isset($arrResult['q']))
-							{
-								$arrVariants1[] = $arrResult['q'];
-							}
-							if (isset($arrResult['b']))
-							{
-								$arrVariants1[] = $arrResult['b'];
-							}
-							if (isset($arrResult['ab']))
-							{
-								$arrVariants1[] = $arrResult['ab'];
-							}
-							if (isset($arrResult['qb']))
-							{
-								$arrVariants1[] = $arrResult['qb'];
-							}
-							if (isset($arrResult['ac']))
-							{
-								foreach ($arrResult['ac'] as $strResult)
-								{
-									$arrVariants1[] = $strResult;
-								}
-							}
-							if (isset($arrResult['abc']))
-							{
-								foreach ($arrResult['abc'] as $strResult)
-								{
-									$arrVariants1[] = $strResult;
-								}
-							}
-							if (isset($arrResult['qc']))
-							{
-								foreach ($arrResult['qc'] as $strResult)
-								{
-									$arrVariants1[] = $strResult;
-								}
-							}
-							if (isset($arrResult['qbc']))
-							{
-								foreach ($arrResult['qbc'] as $strResult)
-								{
-									$arrVariants1[] = $strResult;
-								}
-							}
-							if (isset($arrResult['bc']))
-							{
-								foreach ($arrResult['bc'] as $strResult)
-								{
-									$arrVariants1[] = $strResult;
-								}
+								$arrVariants1[] = $strName;
 							}
 						}
 						elseif ($v == '500')
@@ -260,61 +152,10 @@ class Upload_xml_personv extends CI_Controller
 							}
 		
 							$arrResult = $this->mergeFields($arrFields);
-		
-							if (isset($arrResult['a']))
+									
+							foreach ($arrResult['names'] as $strName)
 							{
-								$arrVariants2[] = $arrResult['a'];
-							}
-							if (isset($arrResult['q']))
-							{
-								$arrVariants2[] = $arrResult['q'];
-							}
-							if (isset($arrResult['b']))
-							{
-								$arrVariants2[] = $arrResult['b'];
-							}
-							if (isset($arrResult['ab']))
-							{
-								$arrVariants2[] = $arrResult['ab'];
-							}
-							if (isset($arrResult['qb']))
-							{
-								$arrVariants2[] = $arrResult['qb'];
-							}
-							if (isset($arrResult['ac']))
-							{
-								foreach ($arrResult['ac'] as $strResult)
-								{
-									$arrVariants2[] = $strResult;
-								}
-							}
-							if (isset($arrResult['abc']))
-							{
-								foreach ($arrResult['abc'] as $strResult)
-								{
-									$arrVariants2[] = $strResult;
-								}
-							}
-							if (isset($arrResult['qc']))
-							{
-								foreach ($arrResult['qc'] as $strResult)
-								{
-									$arrVariants2[] = $strResult;
-								}
-							}
-							if (isset($arrResult['qbc']))
-							{
-								foreach ($arrResult['qbc'] as $strResult)
-								{
-									$arrVariants2[] = $strResult;
-								}
-							}
-							if (isset($arrResult['bc']))
-							{
-								foreach ($arrResult['bc'] as $strResult)
-								{
-									$arrVariants2[] = $strResult;
-								}
+								$arrVariants2[] = $strName;
 							}
 						}
 					}
@@ -322,17 +163,24 @@ class Upload_xml_personv extends CI_Controller
 		
 				if ($bolIsObject)
 				{
+// 					echo '<b>'.$strDefinition.'</b><br>';
 					$intObjectID = $this->upload_xml_model->insertObject($strDefinition, $strTime, 1);
+// 					echo 'OBJEKTS:<br>';
 					
 					foreach($arrVariants1 as $strName)
 					{
+// 						echo $strName.'<br>';
 						$this->upload_xml_model->addNameToObject($intObjectID, $strName, 1);
 					}
 		
+// 					echo "<br>";
 					foreach($arrVariants2 as $strName)
 					{
+// 						echo $strName.'<br>';
 						$this->upload_xml_model->addNameToObject($intObjectID, $strName, 1);
 					}
+// 					echo '----------<br>';
+// 					die();
 				}
 		
 				$reader->next('record');
@@ -347,110 +195,70 @@ class Upload_xml_personv extends CI_Controller
 	
 	public function mergeFields($arrFields)
 	{
-		// arrResult['d'] definīciju izmanto tikai galneajam nosaukumam ar indexu *00
+		/*
+		 * 'a' // Personal name
+		 * 'b' // Numeration
+		 * 'c' // Titles and other words associated with a name
+		 * 'd' // Dates associated with a name
+		 * 'q' // Fuller form of name
+		 */
 		
-		$arrResult = array();
-		if (isset($arrFields['a']))
+		// arrResult['d'] definīciju izmanto tikai galvenajam nosaukumam ar indexu *00
+				
+		$strUzruna = '';
+		if (isset($arrFields['c']) && !strstr($arrFields['c'], "von"))
 		{
+			$strUzruna = trim($arrFields['c'], ', ');
+		}
+		
+		$strVardsUzvards = '';
+		$strVardsUzvards_q = '';
+		$strVardsUzvards_b = '';
+		if (isset($arrFields['a']))
+		{	
 			// samaina vārdu un uzvārdu vietām, noņem komatu
 			$arrParts = explode(",", $arrFields['a']);
 			if (sizeof($arrParts) > 1 && $arrParts[1] != '')
 			{
-				$arrResult['a'] = trim($arrParts[1])." ".$arrParts[0];
+				$strVardsUzvards = trim($arrParts[1], ', ')." ".$arrParts[0];
+				
+				if (isset($arrFields['q']))
+				{
+					// "a" saīsināto vārdu aizvieto ar "q" pilno vārdu, noņemot iekavas
+					$strVardsUzvards_q = trim($arrFields['q'], '(), ')." ".$arrParts[0];
+				}
+				
+				if (isset($arrFields['b']) && substr($arrFields['b'], 0, 1) == '(')
+				{
+					// tāpat kā "q"
+					$strVardsUzvards_b = trim($arrFields['b'], '(), ')." ".$arrParts[0];
+				}
 			}
 			else
 			{
-				$arrResult['a'] = trim($arrFields['a'], ", ");
-			}
-			
-	
-			if (isset($arrFields['q']))
-			{
-				// "a" vārdu un uzvārdu samaina vietām; aizvieto "a" saīsināto vārdu ar "q" pilno vārdu, noņemot iekavas
-				$arrParts = explode(",", $arrFields['a']);
-				if (sizeof($arrParts) > 1 && $arrParts[1] != '')
-				{
-					$arrResult['q'] = trim($arrFields['q'], '(), ')." ".$arrParts[0];
-				}
-			}
-			
-			if (isset($arrFields['d']))
-			{
-				// gadskaitļi definīcijai 
-				$arrResult['d'] = $arrFields['d'];
-			}
-			
-			if (isset($arrFields['b']))
-			{
-				if (substr($arrFields['b'], 0, 1) == '(')
-				{
-					// tāpat kā "q"
-					$arrParts = explode(",", $arrFields['a']);
-					if (sizeof($arrParts) > 1 && $arrParts[1] != '')
-					{
-						$arrResult['b'] = trim($arrFields['b'], '(), ')." ".$arrParts[0];
-					}
-				}
-				elseif (substr($arrFields['b'], 0, 2) == '17' || substr($arrFields['b'], 0, 2) == '18' || substr($arrFields['b'], 0, 2) == '19')
-				{
-					// ja ir gadskaitlis neko nedara; definīciaji nepievieno, jo "b" pie *00 lauka nav kā gadskaitlis
-				}
-				else
-				{
-					// pievieno "a" un "q" ("b" nevar būt, jo ir šis variants) noformētajiem vārdiem beigās romiešu kārtas skaitli
-					$arrResult['ab'] = $arrResult['a'].' '.trim($arrFields['b'], ', ');
-					if (isset($arrResult['q']))
-					{
-						$arrResult['qb'] = $arrResult['q'].' '.trim($arrFields['b'], ', ');
-					}
-				}
-			}
-			
-			if (isset($arrFields['c']) && !strstr($arrFields['c'], "von"))
-			{
-				// ja ir von, tad nekas labs nesanāks
-				
-				// uzruna, grāds priekšā liekams
-				// pievieno "a", "ab", "q", "qb" un "b"
-				$strUzruna = trim($arrFields['c'], ', ');
-				
-				// "Sir, Saint"variants ; " tēvs, franciskānis kapucīns,"
-				if (strpos($strUzruna, ','))
-				{
-					$arrUzrunas = explode(",", $strUzruna);
-					$arrUzrunas[1] = trim($arrUzrunas[1], ', ');
-				}
-				else 
-				{
-					$arrUzrunas[] = $strUzruna; 
-				}
-				
-				foreach ($arrUzrunas as $strUzruna)
-				{
-					$arrResult['ac'][] = $strUzruna.' '.$arrResult['a'];
-					
-					if (isset($arrResult['ab']))
-					{
-						$arrResult['abc'][] = $strUzruna.' '.$arrResult['ab'];
-					}
-					
-					if (isset($arrResult['q']))
-					{
-						$arrResult['qc'][] = $strUzruna.' '.$arrResult['q'];
-					}
-					
-					if (isset($arrResult['qb']))
-					{
-						$arrResult['qbc'][] = $strUzruna.' '.$arrResult['qb'];
-					}
-					
-					if (isset($arrResult['b']))
-					{
-						$arrResult['bc'][] = $strUzruna.' '.$arrResult['b'];
-					}
-				}
+				$strVardsUzvards = trim($arrFields['a'], ", ");
 			}
 		}
+		
+		$strGadi = '';
+		if (isset($arrFields['d']))
+		{
+			// gadskaitļi definīcijai
+			$strGadi = $arrFields['d'];
+		}
+		
+		
+		$strNumurs = '';
+		if (isset($arrFields['b']) && substr($arrFields['b'], 0, 1) != '(' && substr($arrFields['b'], 0, 2) != '17' && substr($arrFields['b'], 0, 2) != '18' && substr($arrFields['b'], 0, 2) != '19')
+		{
+			$strNumurs = trim($arrFields['b'], ', ');
+		}
+		
+		$arrResult = array();
+		$arrResult['names'][] = trim($strUzruna .' '. $strVardsUzvards . ' ' . $strNumurs);
+		if ($strVardsUzvards_b != '') $arrResult['names'][] = trim($strUzruna .' '. $strVardsUzvards_b . ' ' . $strNumurs);
+		if ($strVardsUzvards_q != '') $arrResult['names'][] = trim($strUzruna .' '. $strVardsUzvards_q . ' ' . $strNumurs);
+		$arrResult['date'] = $strGadi;
 		
 		return $arrResult;
 	}

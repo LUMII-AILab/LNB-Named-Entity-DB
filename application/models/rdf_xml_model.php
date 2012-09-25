@@ -1,11 +1,4 @@
 <?php
-/**
- * Fails: rdf_xml_model.php
- * Autors: Madara Paegle
- * Radīts: 2012.02.12
- * Pēdējās izmaiņas: 2012.05.23.
- *
- */
 
 /*
  * Klase Rdf_xml_model
@@ -18,6 +11,8 @@ class Rdf_xml_model extends CI_Model
 	 */	
 	public function getAllNames($intNameIDStart)
 	{
+		$intNameIDStart = intval($intNameIDStart);
+		
 		$strSQL = "SELECT * FROM `name` WHERE `ID` >= $intNameIDStart LIMIT 1000;";
 		$arrNamedEntities = $this->db->query($strSQL)->result_array();
 		return $arrNamedEntities;
@@ -29,6 +24,8 @@ class Rdf_xml_model extends CI_Model
 	*/
 	public function checkIsMoreNames($intNameIDStart)
 	{
+		$intNameIDStart = intval($intNameIDStart);
+		
 		$strSQL = "SELECT * FROM `name` WHERE `ID`  >= $intNameIDStart LIMIT 1;";
 		$arrResult = $this->db->query($strSQL)->result_array();
 		if(sizeof($arrResult) > 0)
@@ -46,6 +43,8 @@ class Rdf_xml_model extends CI_Model
 	*/
 	public function getAllEntities($intEntityIDStart)
 	{
+		$intEntityIDStart = intval($intEntityIDStart);
+		
 		$strSQL = "SELECT * FROM `entity` WHERE `ID` >= $intEntityIDStart LIMIT 1000;";
 		$arrEntities = $this->db->query($strSQL)->result_array();
 		return $arrEntities;
@@ -57,6 +56,8 @@ class Rdf_xml_model extends CI_Model
 	*/
 	public function checkIsMoreEntities($intEntityIDStart)
 	{
+		$intEntityIDStart = intval($intEntityIDStart);
+		
 		$strSQL = "SELECT * FROM `entity` WHERE `ID`  > $intEntityIDStart LIMIT 1;";
 		$arrResult = $this->db->query($strSQL)->result_array();
 		if (sizeof($arrResult) > 0)
@@ -74,6 +75,8 @@ class Rdf_xml_model extends CI_Model
 	*/
 	public function getNamesByName($strName)
 	{
+		$strName = addslashes($strName);
+		
 		$strSQL = "SELECT * FROM `name` WHERE MATCH(`name`) AGAINST('$strName');";
 	
 		$arrNames = $this->db->query($strSQL)->result_array();
@@ -86,6 +89,8 @@ class Rdf_xml_model extends CI_Model
 	*/
 	public function getEntityDefinition($intEntityID)
 	{
+		$intEntityID = intval($intEntityID);
+		
 		$strSQL = "SELECT definition FROM entity WHERE ID = $intEntityID;";
 		$arrResult = $this->db->query($strSQL)->result_array();
 		if(sizeof($arrResult) > 0)
@@ -104,6 +109,8 @@ class Rdf_xml_model extends CI_Model
 	*/
 	public function getEntityNames($intEntityID)
 	{
+		$intEntityID = intval($intEntityID);
+		
 		$arrNames = array();
 	
 		$strSQL = "
@@ -123,6 +130,8 @@ class Rdf_xml_model extends CI_Model
 	*/
 	public function getEntityRelations($intEntityID)
 	{
+		$intEntityID = intval($intEntityID);
+		
 		$strSQL = "
 		SELECT e.ID, e.definition, eo.comment
 		FROM entityOntology eo, entity e
@@ -144,6 +153,8 @@ class Rdf_xml_model extends CI_Model
 	*/
 	public function getNameName($intNameID)
 	{
+		$intNameID = intval($intNameID);
+		
 		$strSQL = "SELECT name FROM name WHERE ID = $intNameID; ";
 		$arrResult = $this->db->query($strSQL)->result_array();
 		if(sizeof($arrResult) > 0)
@@ -162,6 +173,8 @@ class Rdf_xml_model extends CI_Model
 	*/
 	public function getNameEntities($intNameID)
 	{
+		$intNameID = intval($intNameID);
+		
 		$strSQL = "
 		SELECT  e.ID, e.definition
 		FROM entityName en, entity e
@@ -179,6 +192,9 @@ class Rdf_xml_model extends CI_Model
 	*/
 	public function getNameDocuments($intNameID, $intIDStart)
 	{
+		$intNameID = intval($intNameID);
+		$intIDStart = intval($intIDStart);
+		
 		$strSQL = "
 		SELECT d.reference, d.title, d.type, d.date, nd.occurrences
 		FROM document d, nameDocument nd
@@ -198,6 +214,9 @@ class Rdf_xml_model extends CI_Model
 	*/
 	public function checkIsMoreDocuments($intNameID, $intDocumentIDStart)
 	{
+		$intNameID = intval($intNameID);
+		$intDocumentIDStart = intval($intDocumentIDStart);
+		
 		$strSQL = "SELECT * FROM nameDocument WHERE nameID = $intNameID AND documentID >= $intDocumentIDStart LIMIT 1;";
 		$arrResult = $this->db->query($strSQL)->result_array();
 		if(sizeof($arrResult) > 0)

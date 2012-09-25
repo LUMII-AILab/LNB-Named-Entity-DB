@@ -1,22 +1,19 @@
 <?php
-/**
- * Fails: search.php
- * Autors: Madara Paegle
- * Radīts: 2012.02.10
- * Pēdējās izmaiņas: 2012.05.23.
- * 
- */
 if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 
 /*
- * Klase Search
- * Nolūks: kontrolieris nosaukuma meklēšanas funkcijas izpildei
+ * KLASE
+ * 
+ * Nosaukums: Search
+ * Funkcija: kontrolieris nosaukuma meklēšanas funkcijas izpildei
 */
 class Search extends CI_Controller
 {
 	/*
-	 * Klases konstruktors.
+	 * FUNKCIJA
+	 * 
+	 * Klases konstruktors
 	*/
 	public function __construct()
 	{
@@ -27,7 +24,10 @@ class Search extends CI_Controller
 	}
 	
 	/*
-	 * Klases noklusējuma funkcija
+	 * FUNKCIJA
+	 * 
+	 * Nosaukums: index (Klases noklusējuma funkcija)
+	 * Funkcija: novirza uz funkciju showSearchResults
 	*/
 	public function index()
 	{
@@ -35,121 +35,138 @@ class Search extends CI_Controller
 	}
 	
 	/*
-	 * Funkcija saņem datus: meklējamais nosaukums un tā kategorija. Apstrādā tos, noskaidro rezultātu kārtošanas
-	 * parametrus, izsauc meklēšanas funkciju un izsauc meklēšanas rezultātu skatu.
+	 * FUNKCIJA
+	 * 
+	 * Nosaukums: showSearchResults
+	 * Funkcija: Nosaukuma meklēšana
+	 * Parametri:
+	 * 			(POST)
+	 * 				key_word - meklējamais atslēgas vārds
+	 * 				
+	 * 				
 	*/
 	public function showSearchResults()
 	{
-		/*** start": nosaukums ***/
-		if ($this->input->post('key_word', TRUE))
+		// Meklējamais atslēgas vārds
+		if ($this->input->get('key_word', TRUE))
 		{
-			$strName = $this->input->post('key_word', TRUE);
+			$strName = addslashes($this->input->get('key_word', TRUE));
 		}
-		else // ja nav padota nosaukuma vērtība, pieņem, ka jāmeklē visi noteiktās kategorijas nosaukumi
+		else
 		{
+			// Ja nav padota nosaukuma vērtība, pieņem, ka jāmeklē visi noteiktās kategorijas nosaukumi
 			$strName = '';
 		}
-		/*** end: nosaukums ***/
+		$arrOutputData['strKeyWord'] = $strName;
 		
 		
-		/*** start: rezultāatu kārtošana ***/
-		$strOrderBy = 'occ';
-		if ($this->input->post('order_by', true))
+		// Rezultātu kārtošanas kritērijs
+		if ($this->input->get('order_by', true))
 		{
-			$strOrderBy = $arrOutputData['strOrderBy'] = $this->input->post('order_by', true);
-		}
-		
-		$strOrderMode = 'desc';
-		if ($this->input->post('order_mode', true))
-		{
-			$strOrderMode = $arrOutputData['strOrderMode'] = $this->input->post('order_mode', true);
-		}
-		/*** end: rezultātu kārtošana ***/
-		
-		
-		/*** start: kategorijas ***/
-		$arrCategories = array();
-		
-		if ($this->input->post('category', TRUE))
-		{
-			$arrCategoriesPost = $this->input->post('category', TRUE);
-			foreach ($arrCategoriesPost as $intCategoryID)
+			$strOrderByGet = $this->input->get('order_by', true);
+			if ($strOrderByGet == 'name' || $strOrderByGet == 'occ' || $strOrderByGet == 'def' || $strOrderByGet == 'time' || $strOrderByGet == 'category')
 			{
-				/* atrod apakškategoriju ID vērtības, kuras būs jāmeklē datu bāzē */
-				if ($intCategoryID == 1) // persona
-				{
-					$arrCategories = array_merge($arrCategories, array(1, 2, 3));
-				}
-				elseif ($intCategoryID == 2) // vieta
-				{
-					$arrCategories = array_merge($arrCategories, array(4, 5, 6, 7));
-				}
-				elseif ($intCategoryID == 3) // organizācija
-				{
-					$arrCategories = array_merge($arrCategories, array(8, 9, 10, 11, 12, 13));
-				}
-				elseif ($intCategoryID == 4) // iestāde
-				{
-					$arrCategories = array_merge($arrCategories, array(14));
-				}
-				elseif ($intCategoryID == 5) // notikums
-				{
-					$arrCategories = array_merge($arrCategories, array(15));
-				}
-				elseif ($intCategoryID == 6) // produkts
-				{
-					$arrCategories = array_merge($arrCategories, array(16, 17, 18, 19, 20));
-				}
-				elseif ($intCategoryID == 7) // laiks
-				{
-					$arrCategories = array_merge($arrCategories, array(21, 22));
-				}
-				elseif ($intCategoryID == 8) // citi
-				{
-					$arrCategories = array_merge($arrCategories, array(23));
-				}
+				$strOrderBy = $strOrderByGet;
+			}
+		}
+		else
+		{
+			$strOrderBy = 'occ';
+		}
+		$arrOutputData['strOrderBy'] = $strOrderBy;
+		
+		
+		// Rezultātu kārtošanas kārtība
+		if ($this->input->get('order_mode', true) == 'ASC')
+		{
+			$strOrderMode = 'ASC';
+		}
+		else
+		{
+			$strOrderMode = 'DESC';
+		}
+		$arrOutputData['strOrderMode'] = $strOrderMode;
+		
+		
+		// Kategorijas
+		$arrCategories = array();
+		if ($this->input->get('category', TRUE) && is_numeric($this->input->get('category', TRUE)))
+		{
+			$intCategoryID = $this->input->get('category', TRUE);
+			
+			// atrod apakškategoriju ID vērtības, kuras būs jāmeklē datu bāzē
+			if ($intCategoryID == 1) // persona
+			{
+				$arrCategories = array_merge($arrCategories, array(1, 2, 3));
+			}
+			elseif ($intCategoryID == 2) // vieta
+			{
+				$arrCategories = array_merge($arrCategories, array(4, 5, 6, 7));
+			}
+			elseif ($intCategoryID == 3) // organizācija
+			{
+				$arrCategories = array_merge($arrCategories, array(8, 9, 10, 11, 12, 13));
+			}
+			elseif ($intCategoryID == 4) // iestāde
+			{
+				$arrCategories = array_merge($arrCategories, array(14));
+			}
+			elseif ($intCategoryID == 5) // notikums
+			{
+				$arrCategories = array_merge($arrCategories, array(15));
+			}
+			elseif ($intCategoryID == 6) // produkts
+			{
+				$arrCategories = array_merge($arrCategories, array(16, 17, 18, 19, 20));
+			}
+			elseif ($intCategoryID == 7) // laiks
+			{
+				$arrCategories = array_merge($arrCategories, array(21, 22));
+			}
+			elseif ($intCategoryID == 8) // citi
+			{
+				$arrCategories = array_merge($arrCategories, array(23));
 			}
 		}
 		else // pēc noklusējuma meklē visos
 		{
-			$arrCategoriesPost = array(0);
+			$intCategoryID = 0;
 		}
-		/*** end: kategorijas ***/
+		$arrOutputData['intCategoryID'] = $intCategoryID;
 		
-		/*** start: lapas numurs ***/
-		if ($this->input->post('pageNum', TRUE))
+		
+		// Lapas numurs
+		if ($this->input->get('pageNum', TRUE) && is_numeric($this->input->get('pageNum', TRUE)) && $this->input->get('pageNum', TRUE) > 0)
 		{
-			$intPageNum = (int)$this->input->post('pageNum', TRUE);
+			$intPageNum = intval($this->input->get('pageNum', TRUE));
 		}
-		else // pēc noklusējuma 1
+		else // pēc noklusējuma 1. lapa
 		{
 			$intPageNum = 1;
 		}
-		/*** end: lapas numurs ***/
+		$arrOutputData['intPageNum'] = $intPageNum;
+
 		
-		if ($this->input->post('row_count_per_page', TRUE))
+		// Ierakstu skaits vienā lapā
+		if ($this->input->get('row_count_per_page', TRUE) == 20 || $this->input->get('row_count_per_page', TRUE) == 40)
 		{
-			$intRowCountPerPage = (int)$this->input->post('row_count_per_page', TRUE);
+			$intRowCountPerPage = (int)$this->input->get('row_count_per_page', TRUE);
 		}
 		else
 		{
 			$intRowCountPerPage = 40;
 		}
+		$arrOutputData['intRowCountPerPage'] = $intRowCountPerPage;
 		
-		/* uzglabā skatā izmantojamos datus masīvā */
-		$arrResult =$this->search_model->getEntityNameByNameAndCategory($strName, $arrCategories, $intPageNum, $strOrderBy, $strOrderMode, $intRowCountPerPage); // izsauc meklēšanas funkciju
+		
+		// Izsauc meklēšanas funkciju datu bāzē
+		$arrResult = $this->search_model->getEntityNameByNameAndCategory($strName, $arrCategories, $intPageNum, $strOrderBy, $strOrderMode, $intRowCountPerPage);
 		
 		$arrOutputData['arrEntityNames'] = $arrResult['arrEntityNames'];
 		$arrOutputData['intRowsCount'] = $arrResult['intRowsCount'];
-		$arrOutputData['intRowCountPerPage'] = $intRowCountPerPage;
-		$arrOutputData['intPageNum'] = $intPageNum;
-		$arrOutputData['strKeyWord'] = $strName;
-		$arrOutputData['arrCategoriesPost'] = $arrCategoriesPost;
-		$arrOutputData['strOrderBy'] = $strOrderBy;
-		$arrOutputData['strOrderMode'] = $strOrderMode;
 
-		$this->load->view('search_view', $arrOutputData); // izsauc skatu
+		// Izveido meklēšanas rezultātu skatu
+		$this->load->view('search_view', $arrOutputData);
 	}
 }
-
 ?>

@@ -1,32 +1,32 @@
 <?php 
-/**
- * Fails: rdf_xml.php
- * Autors: Madara Paegle
- * Radīts: 2012.02.20
- * Pēdējās izmaiņas: 2012.05.23.
- * 
- */
 if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-
 /*
- * Klase Rdf_xml
- * Nolūks: kontrolieris datu ieguvei RDF/XML formātā
+ * KLASE
+ * 
+ * Nosaukums: Rdf_xml
+ * Funkcija: kontrolieris datu ieguvei RDF/XML formātā
 */
 class Rdf_xml extends CI_Controller 
 {
-	/*
-	 * Klases konstruktors.
+	/* 
+	 * FUNKCIJA
+	 * 
+	 * Klases konstruktors 
 	*/	
 	public function __construct()
 	{
 		parent::__construct();
-		$this->load->model('rdf_xml_model'); // ielādē modeli	
+		$this->load->model('rdf_xml_model');
 		$this->load->library('session');
 	}
 	
-	/*
-	 * Funkcija ielādē lietotāja saskarnes skatu datu pieprasīšanai RDF/XML formātā.
+	/* 
+	 * FUNKCIJA
+	 * 
+	 * Nosaukums: index
+	 * Funkcija: ielādē lietotāja saskarnes skatu datu pieprasīšanai RDF/XML formātā.
+	 * Parametri:
 	*/
 	public function index()
 	{
@@ -35,8 +35,14 @@ class Rdf_xml extends CI_Controller
 	}
 	
 	/*
-	 * Funkcija izveido sarakstu ar datu bāzē reģistrētajiem īpašvārdiem RDF/XML formātā. 
-	 * Īpašvārdi tiek atgriezti porcijās pa 1000 nosaukumiem, ja ir vairāk nosaukumu, tad tiek pievienota URI norāde uz nākamo nosaukumu porciju.
+	* FUNKCIJA
+	*
+	* Nosaukums: showAllNames
+	* Funkcija: izveido sarakstu ar datu bāzē reģistrētajiem īpašvārdiem RDF/XML formātā. 
+	* 			Īpašvārdi tiek atgriezti porcijās pa 1000 nosaukumiem, ja ir vairāk nosaukumu, tad tiek pievienota URI norāde uz nākamo nosaukumu porciju.
+	* Parametri: 
+	* 			(GET)
+	* 				start - nosaukuma identifikators, no kura jāsāk rādīt informāciju
 	*/
 	public function showAllNames()
 	{
@@ -44,7 +50,7 @@ class Rdf_xml extends CI_Controller
 		
 		$strBasePath = 'http://'. $_SERVER['SERVER_NAME'];
 		
-		if ($this->input->get('start', TRUE)) // get parametrs 'start' norāda identifikatoru īpašvārdam, no kura jāsāk rādīt informāciju
+		if ($this->input->get('start', TRUE))
 		{
 			$intIDStart = (int)$this->input->get('start', TRUE);
 		}
@@ -74,10 +80,15 @@ class Rdf_xml extends CI_Controller
 		$this->load->view('rdf_xml_view', array('strXML' => $strXML)); // RDF/XML formāta skata ielāde
 	}
 	
-	
-	/* 
-	 * Funkcija izveido sarakstu ar datu bāzē reģistrētajiem objektiem RDF/XML formātā.
-	 * Objekti tiek atgriezti porcijās pa 1000 objektiem, ja ir vairāk objekti, tad tiek pievienota URI norāde uz nākamo objektu porciju.
+	/*
+	* FUNKCIJA
+	*
+	* Nosaukums: showAllEntities
+	* Funkcija: Funkcija izveido sarakstu ar datu bāzē reģistrētajiem objektiem RDF/XML formātā.
+	* 			Objekti tiek atgriezti porcijās pa 1000 objektiem, ja ir vairāk objekti, tad tiek pievienota URI norāde uz nākamo objektu porciju.
+	* Parametri:
+	* 			(GET)
+	* 				start - identifikatoru objektam, no kura jāsāk rādīt informāciju
 	*/
 	public function showAllEntities()
 	{
@@ -85,7 +96,7 @@ class Rdf_xml extends CI_Controller
 	
 		$strBasePath = 'http://'. $_SERVER['SERVER_NAME'];
 	
-		if ($this->input->get('start', TRUE)) // get parametrs 'start' norāda identifikatoru objektam, no kura jāsāk rādīt informāciju
+		if ($this->input->get('start', TRUE))
 		{
 			$intIDStart = (int)$this->input->get('start', TRUE);
 		}
@@ -116,11 +127,15 @@ class Rdf_xml extends CI_Controller
 	}
 	
 	/*
-	 * Funkcija izveido sarakstu ar atrastajiem īpašvārdiem RDF/XML formātā.
-	 * 
-	 * Parametri:
-	 * 	 strName - meklējamais īpašvārs
-	 */
+	* FUNKCIJA
+	*
+	* Nosaukums: showSearchedNames
+	* Funkcija: izveido sarakstu ar atrastajiem īpašvārdiem RDF/XML formātā
+	* Parametri:
+	* 			$strName - meklējamais īpašvārs
+	* 			(POST)
+	* 				name - meklējamais īpašvārs
+	*/
 	public function showSearchedNames($strName ='')
 	{
 		if ($this->input->post('name', TRUE)) // gadījumā, ja meklējums tiek pieprasīts caur lietotāja saskarnes RDF/XML skata formu
@@ -142,14 +157,20 @@ class Rdf_xml extends CI_Controller
 		
 		$this->load->view('rdf_xml_view', array('strXML' => $strXML)); // RDF/XML formāta skata ielāde
 	}
-
 	
-	/* 
-	 * Funkcija pēc padotā identifikatora ($intID) izveido objekta (entity) informāciju:
-	 * -	objekta definīcija, 
-	 * -	objekta nosaukumi, 
-	 * -	ontoloģiski saistīti objekti
-	 * RDF/XML formā.
+	/*
+	* FUNKCIJA
+	*
+	* Nosaukums: showEntityData
+	* Funkcija: Funkcija pēc padotā identifikatora ($intID) izveido objekta (entity) informāciju:
+	* 			-objekta definīcija, 
+	* 			-objekta nosaukumi, 
+	* 			-ontoloģiski saistīti objekti
+	* 			RDF/XML formā.
+	* Parametri:
+	* 			$intID - objekta identfikiators
+	* 			(POST)
+	* 				id - objekta identfikiators
 	*/
 	public function showEntityData($intID = 0)
 	{
@@ -200,13 +221,22 @@ class Rdf_xml extends CI_Controller
 		$this->load->view('rdf_xml_view', array('strXML' => $strXML));
 	}
 	
-	
-	/* Funkcija pēc padotā identifikatora ($intID) izvada noaukuma (name) informāciju:
-	 * -	nosaukuma nosaukums, 
-	 * -	nosaukuma objekti,
-	 * -	dokumenti, kuros nosaukums atrasts (dokumenti tiek atgriezti porcijās pa 100 dokumentiem, 
-	 * ja ir vairāk dokumentu, tad tiek pievienota URI norāde uz nākamo dokumentu porciju)
-	 * RDF/XML formā.
+	/*
+	 * FUNKCIJA
+	*
+	* Nosaukums: showNameData
+	* Funkcija: Funkcija pēc padotā identifikatora ($intID) izvada noaukuma (name) informāciju:
+					-nosaukuma nosaukums, 
+					-nosaukuma objekti,
+					-dokumenti, kuros nosaukums atrasts (dokumenti tiek atgriezti porcijās pa 100 dokumentiem, 
+				ja ir vairāk dokumentu, tad tiek pievienota URI norāde uz nākamo dokumentu porciju)
+				RDF/XML formā.
+	* Parametri:
+	* 			$intID - nosaukuma identfikiators
+	* 			(POST)
+	* 				id - nosaukuma identfikiators
+	* 			(GET)
+	* 				start
 	*/
 	public function showNameData($intID = 0)
 	{
@@ -269,5 +299,4 @@ class Rdf_xml extends CI_Controller
 		$this->load->view('rdf_xml_view', array('strXML' => $strXML));
 	}
 }
-
 ?>

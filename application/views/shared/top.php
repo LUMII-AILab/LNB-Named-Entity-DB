@@ -96,30 +96,30 @@
 											</div>
 										</div>
 										<div class="contentRight">
-											<form id="searchForm" action="/namedEntityDB/browse" method="POST" style="margin-top: 1px;">
+											<form id="searchForm" action="/namedEntityDB/browse" method="GET" style="margin-top: 1px;">
 												<div class="commonSearchTitle1">
 													<div>LABORATORIJA</div> 
 												</div>
 													
 												<div class="mainHeaderLinks1">
 													<label id="cat_0_label" for="cat_0" onclick="changeColor(this, 0)" style="padding-left: 30px; color: rgb(167, 170, 179)">Viss</label>
-													<input id="cat_0" type="checkbox" name="category[]" value="0" />|
+													<input id="cat_0" type="checkbox" name="category" value="0" />|
 													<label id="cat_1_label" for="cat_1" onclick="changeColor(this, 1)" style="color: rgb(167, 170, 179)">Persona</label>
-													<input id="cat_1" type="checkbox" name="category[]" value="1" />|
+													<input id="cat_1" type="checkbox" name="category" value="1" />|
 													<label id="cat_2_label" for="cat_2" onclick="changeColor(this, 2)" style="color: rgb(167, 170, 179)">Vieta</label>
-													<input id="cat_2" type="checkbox" name="category[]" value="2" />|
+													<input id="cat_2" type="checkbox" name="category" value="2" />|
 													<label id="cat_3_label" for="cat_3" onclick="changeColor(this, 3)" style="color: rgb(167, 170, 179)">Organizācija</label>
-													<input id="cat_3" type="checkbox" name="category[]" value="3" />|
+													<input id="cat_3" type="checkbox" name="category" value="3" />|
 													<label id="cat_4_label" for="cat_4" onclick="changeColor(this, 4)" style="color: rgb(167, 170, 179)">Iestāde</label>
-													<input id="cat_4" type="checkbox" name="category[]" value="4" />|
+													<input id="cat_4" type="checkbox" name="category" value="4" />|
 													<label id="cat_5_label" for="cat_5" onclick="changeColor(this, 5)" style="color: rgb(167, 170, 179)">Notikums</label>
-													<input id="cat_5" type="checkbox" name="category[]" value="5" />|
+													<input id="cat_5" type="checkbox" name="category" value="5" />|
 													<label id="cat_6_label" for="cat_6" onclick="changeColor(this, 6)" style="color: rgb(167, 170, 179)">Produkts</label>
-													<input id="cat_6" type="checkbox" name="category[]" value="6" />|
+													<input id="cat_6" type="checkbox" name="category" value="6" />|
 													<label id="cat_7_label" for="cat_7" onclick="changeColor(this, 7)" style="color: rgb(167, 170, 179)">Laiks</label>
-													<input id="cat_7" type="checkbox" name="category[]" value="7" />|
+													<input id="cat_7" type="checkbox" name="category" value="7" />|
 													<label id="cat_8_label" for="cat_8" onclick="changeColor(this, 8)" style="color: rgb(167, 170, 179)">Citi</label>
-													<input id="cat_8" type="checkbox" name="category[]" value="8" />
+													<input id="cat_8" type="checkbox" name="category" value="8" />
 												</div>
 												
 												<div class="mainHeaderSearch1">
@@ -133,16 +133,15 @@
 											
 											<script type="text/javascript">
 													<?php 
-													if (isset($arrCategoriesPost))
-														foreach ($arrCategoriesPost as $intCategory)
-													 	{
-													 		?>
-													 		var chb = document.getElementById("cat_" +<?=$intCategory?>);
-													 		chb.checked = true;
-													 		var label = document.getElementById("cat_" +<?=$intCategory?> + "_label");
-													 		label.style.color = "#4C5666";
-													 		<?php 
-													 	}
+													if (isset($intCategoryID))
+													{
+													 ?>
+													 	var chb = document.getElementById("cat_" +<?=$intCategoryID?>);
+													 	chb.checked = true;
+													 	var label = document.getElementById("cat_" +<?=$intCategoryID?> + "_label");
+													 	label.style.color = "#4C5666";
+													 <?php 
+													 }
 													 ?>
 											</script>
 													

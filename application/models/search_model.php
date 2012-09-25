@@ -1,11 +1,4 @@
 <?php
-/**
- * Fails: search_model.php
- * Autors: Madara Paegle
- * Radīts: 2012.02.10
- * Pēdējās izmaiņas: 2012.05.23.
- *
- */
 
 /*
  * Klase Search_model
@@ -27,15 +20,20 @@ class Search_model extends CI_Model
 	 */
 	public function getEntityNameByNameAndCategory($strName, $arrCategories, $intPageNum, $strOrderBy, $strOrderMode, $intRowCountPerPage)
 	{
+		$strName = addslashes($strName);
+		$intPageNum = intval($intPageNum);
+		$strOrderBy = addslashes($strOrderBy);
+		$strOrderMode = addslashes($strOrderMode);
+		$intRowCountPerPage = intval($intRowCountPerPage);
+		
 		$intOffset = ($intPageNum - 1) * $intRowCountPerPage; // nosaka, no kuras rindas sākot, jāatgriež rezultāta rindas
 	
-		$strSQL = "SELECT SQL_CALC_FOUND_ROWS n.ID, n.name, e.definition, c.name AS category, e.ID AS entityID, e.time, 
-					(SELECT SUM(nd.occurrences) FROM nameDocument nd WHERE nd.nameID = n.ID) as totalOccurrences
+		$strSQL = "SELECT SQL_CALC_FOUND_ROWS n.ID, n.name,  n.totalOccurrences, e.definition, c.name AS category, e.ID AS entityID, e.time
 					FROM name n, entityName en, entity e, category c WHERE ";
 		
 		if ($strName != '') // ja padots tukšs nosaukums, meklē visus norādīto kategoriju nosaukumus
 		{
-			$strSQL .= "MATCH(n.name) AGAINST(?) AND "; 
+			$strSQL .= "(MATCH(n.name) AGAINST(?) OR n.name LIKE '%$strName%') AND "; 
 		}
 		
  		$strSQL .= "n.ID = en.nameID AND en.entityID = e.ID AND c.ID = e.categoryID ";
@@ -45,7 +43,7 @@ class Search_model extends CI_Model
 			$strSQL .= "AND (";
 			foreach ($arrCategories as $intCategory)
 			{
-				$strSQL .= "e.categoryID = ". $intCategory ." OR ";
+				$strSQL .= "e.categoryID = ". intval($intCategory) ." OR ";
 			}
 			$strSQL = trim($strSQL, "OR ");
 			$strSQL .= ") ";

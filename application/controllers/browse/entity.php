@@ -1,21 +1,19 @@
 <?php
-/**
- * Fails: entity.php
- * Autors: Madara Paegle
- * Radīts: 2012.02.12
- * Pēdējās izmaiņas: 2012.05.23.
- * 
- */
 if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 
 /*
- * Klase Entity
- * Nolūks: kontrolieris objekta informācijas meklēšanas, parādīšanas, labošanas, dzēšamas funkciju izpildei
+ * KLASE
+ * Nosaukums: Entity
+ * Funkcija: Kontrolieris objekta informācijas meklēšanas, parādīšanas, labošanas, dzēšanas funkcijām
 */
 class Entity extends CI_Controller
 {
-	/* Klases konstruktors */
+	/* 
+	 * FUNKCIJA
+	 * 
+	 * Klases konstruktors 
+	*/
 	public function __construct()
 	{
 		parent::__construct();
@@ -27,104 +25,157 @@ class Entity extends CI_Controller
 	}
 	
 	/*
-	 * Funkcija nodrošina objekta sķirkļa parādīšanu un novirzi uz šķirklī izsaukto formu funkcijām
+	 * FUNKCIJA
 	 * 
+	 * Nosaukums: showEntityData
+	 * Funkcija: Objekta sķirkļa parādīšana un šķirklī rediģēšanas funkciju izsaukšana
 	 * Parametri:
-	 * 	$intEntityID - objekta identifikators, 
-	 * 	$arrOutputData - skata informācijas masīvs
-	 * 
+	 * 			$intEntityID - objekta identifikators
+	 * 			$arrOutputData - skata informācijas masīvs
+	 * 			(POST) Izsauc rediģēšanas funkcijas:
+	 * 				delete_entity
+	 * 				save_entity
+	 * 				delete_name
+	 * 				delete_ontology
+	 * 				delete_resource
+	 * 				edit_entity
+	 * 				edit_name, name_id
+	 * 				edit_ontology, ontology_id
+	 * 				edit_resource, resource_id
+	 * 				save_name
+	 * 				save_ontology
+	 * 				save_resource
+	 * 				add_name
+	 * 				add_ontology
+	 * 				add_resource		
 	 */
 	public function showEntityData($intEntityID, $arrOutputData=array())
-	{	
-		if (!isset($intEntityID) || !is_numeric($intEntityID) || !ctype_digit($intEntityID) || !$this->entity_model->checkIfIsEntity($intEntityID)) // pārbauda padotā ID vērtību
+	{
+		// Pārbauda, vai padotais objekta ID ir derīgs
+		if (!isset($intEntityID) || !is_numeric($intEntityID) || !ctype_digit($intEntityID) || !$this->entity_model->checkIfIsEntity(intval($intEntityID))) // pārbauda padotā ID vērtību
 		{
 			header ("Location: /namedEntityDB/browse/");
 		}
 		else 
-		{	
-			if ($this->input->post('delete_entity')) // objekta dzēšana
+		{
+			if ($this->input->post('delete_entity'))
 			{
+				// Objekta dzēšana
 				$this->deleteEntity($intEntityID);
 			}
-			elseif ($this->input->post('save_entity')) // objekta pamatinfo labošana
+			elseif ($this->input->post('save_entity'))
 			{
+				// Objekta pamatinformācijas labošana
 				$this->editEntity($intEntityID);
 			}
 			else
-			{				
-				if ($this->input->post('delete_name')) // objekta nosaukuma dzēšana
+			{
+				// Objekta apskatīšana vai rediģēšana
+				
+				
+				// Objekta rediģēšanas funkciju izsaukšana
+				if ($this->input->post('delete_name'))
 				{
+					// Objekta nosaukuma dzēšana
 					$this->deleteEntityName($intEntityID);
 				}
-				elseif ($this->input->post('delete_ontology')) // objekta ontoloģiska objekta dzēšana
+				elseif ($this->input->post('delete_ontology'))
 				{
+					// Objekta ontoloģiska objekta dzēšana
 					$this->deleteEntityOntology($intEntityID);
 				}
-				elseif ($this->input->post('delete_resource')) // objekta resursa dzēšana
+				elseif ($this->input->post('delete_resource'))
 				{
+					// Objekta resursa dzēšana
 					$this->deleteEntityResource($intEntityID);
 				}
 				
-				elseif ($this->input->post('edit_entity')) // objekta pamatinfo labošanas skats
+				elseif ($this->input->post('edit_entity'))
 				{
+					// Objekta pamatinfo labošanas skats
 					$arrOutputData['bolEditEntity'] = TRUE;
 					$arrOutputData['arrCategories'] =  $this->entity_model->getAllCategories();
 				}
-				elseif ($this->input->post('edit_name')) // objekta nosaukuma labošanas skats
+				elseif ($this->input->post('edit_name'))
 				{
+					// Objekta nosaukuma labošanas skats
 					$arrOutputData['intEditName'] = $this->input->post('name_id');
 				}
-				elseif ($this->input->post('edit_ontology')) // objekta ontoloģijas labošanas skats
+				elseif ($this->input->post('edit_ontology'))
 				{
+					// Objekta ontoloģijas labošanas skats
 					$arrOutputData['intEditOntology'] = $this->input->post('ontology_id');
 				}
-				elseif ($this->input->post('edit_resource')) // objekta resursa labošanas skats
+				elseif ($this->input->post('edit_resource'))
 				{
+					// Objekta resursa labošanas skats
 					$arrOutputData['intEditResource'] = $this->input->post('resource_id');
 				}
 				
-				elseif ($this->input->post('save_name')) // objekta nosaukuma labošana
+				elseif ($this->input->post('save_name'))
 				{
+					// Objekta nosaukuma labošana
 					$this->editEntityName($intEntityID);
 				}
-				elseif ($this->input->post('save_ontology')) // objekta ontoloģiska objekta labošana
+				elseif ($this->input->post('save_ontology'))
 				{
+					// Objekta ontoloģiska objekta labošana
 					$this->editEntityOntology($intEntityID);
 				}
-				elseif ($this->input->post('save_resource')) // objekta resursa labošana
+				elseif ($this->input->post('save_resource'))
 				{
+					// Objekta resursa labošana
 					$this->editEntityResource($intEntityID);
 				}
 				
-				elseif ($this->input->post('add_name')) // objekta nosaukuma pievienošana
+				elseif ($this->input->post('add_name'))
 				{
+					// Objekta nosaukuma pievienošana
 					$arrOutputData = $this->addEntityName($intEntityID);
 				}
-				elseif ($this->input->post('add_ontology')) // objekta ontoloģiska objekta pievienošana
+				elseif ($this->input->post('add_ontology'))
 				{
+					// Objekta ontoloģiska objekta pievienošana
 					$arrOutputData = $this->addEntityOntology($intEntityID);
 				}
-				elseif ($this->input->post('add_resource')) // objekta resursa pievienošana
+				elseif ($this->input->post('add_resource'))
 				{
+					// Objekta resursa pievienošana
 					$arrOutputData = $this->addEntityResource($intEntityID);
 				}
 				
 				
+				// Iegūst objekta informāciju
 				$arrOutputData = array_merge($arrOutputData, $this->entity_model->getEntityData($intEntityID));
 				
-				$this->load->view('entity_view', $arrOutputData); // ielādē objekta šķirkli
+				// Izveido objekta šķirkļa skatu
+				$this->load->view('entity_view', $arrOutputData);
 			}
 		}
 	}
 		
-	/* Funkcija nodrošina jauna objekta pievienošanu */
+	/* 
+	 * FUNKCIJA
+	 * 
+	 * Nosaukums: addNewEntity
+	 * Funkcija: Jauna objekta pievienošana
+	 * Parametri:
+	 * 			(POST)
+	 *  			definition - objekta definīcija
+	 *  			time - objekta laiks
+	 * 				category - objekta kategorija
+	 *  			name - objekta nosaukums
+	*/
 	public function addNewEntity()
 	{
 		if (checkSession($this))
 		{
-			if (!$this->input->post('definition', TRUE)) // ja nav padoti formas ievaddati, ielādē jauna objekta pievienošanas formas skatu
+			// Ja nav padoti formas ievaddati, ielādē jauna objekta pievienošanas formas skatu
+			if (!$this->input->post('definition', TRUE))
 			{
-				$arrOutputData['arrCategories'] = $this->entity_model->getAllCategories(); // izsauc funkciju visu kategoriju iegūšanai, ko rādīt formās izvēlnes laukā
+				// Iegūst kategorijas
+				$arrOutputData['arrCategories'] = $this->entity_model->getAllCategories();
+				
 				$this->load->view('add_new_entity_view', $arrOutputData);
 			}
 			else
@@ -133,14 +184,29 @@ class Entity extends CI_Controller
 				$strTime = $this->input->post('time', TRUE);
 				$intCategory = $this->input->post('category', TRUE);
 				$strName = $this->input->post('name', TRUE);
+				
 				$intEntityID = $this->entity_model->insertEntity($strDefinition, $strTime, $intCategory);
+				
 				$arrOutputData = $this->addEntityName($intEntityID);
-				$this->showEntityData($intEntityID, $arrOutputData); // novirza uz jaunizveidotā vai atrastā objekta šķirkli
+				
+				// Novirza uz jaunizveidotā vai atrastā objekta šķirkli
+				$this->showEntityData($intEntityID, $arrOutputData);
 			}
 		}
 	}
 	
-	/* Funkcija nodrošina iespēju labot objekta pamatinformāciju */
+	/* 
+	 * FUNKCIJA
+	 * 
+	 * Nosaukums: editEntity
+	 * Funkcija: Objekta pamatinformācijas labošana
+	 * Parametri:
+	 * 			$intEntityID - objekta identifikators
+	 * 			(POST)
+	 * 				definition - jaunā definīcija
+	 * 				time - jaunais laiks
+	 * 				category - jaunā kategorija
+	*/
 	public function editEntity($intEntityID)
 	{
 		if (checkSession($this))
@@ -148,13 +214,28 @@ class Entity extends CI_Controller
 			$strDefinition = $this->input->post('definition');
 			$strTime = $this->input->post('time');
 			$intCategory = $this->input->post('category');
+			
 			$intNewEntityID = $this->entity_model->updateEntity($intEntityID, $strDefinition, $strTime, $intCategory);
+			
 			unset($_POST['save_entity']);
-			$this->showEntityData($intNewEntityID); // novirza uz jaunizveidotā vai atrastā objekta šķirkli
+			// Novirza uz jaunizveidotā vai atrastā objekta šķirkli
+			$this->showEntityData($intNewEntityID);
 		}
 	}
 	
-	/* Funkcija nodrošina iespēju labot objekta un nosaukuma saites informāciju */
+	/* 
+	 * FUNKCIJA
+	 * 
+	 * Nosaukums: editEntityName
+	 * Funkcija: Objekta un nosaukuma saites informācijas labošana
+	 * Parametri:
+	 * 			$intEntityID - objekta identifikators
+	 * 			(POST)
+	 * 				name_id - nosaukuma identifikators
+	 * 				name_comment - objekta un nosaukuma saites komentārs
+	 * 				time_from - nosaukuma lietošanas laiks no
+	 * 				time_to - nosaukuma lietošanas laiks līdz
+	*/
 	public function editEntityName($intEntityID)
 	{
 		if (checkSession($this))
@@ -163,76 +244,146 @@ class Entity extends CI_Controller
 			$strComment = $this->input->post('name_comment');
 			$strTimeFrom = $this->input->post('time_from');
 			$strTimeTo = $this->input->post('time_to');
+			
 			$this->entity_model->updateEntityName($intEntityID, $intNameID, $strComment, $strTimeFrom, $strTimeTo);
 		}
 	}
 	
-	/* Funkcija nodrošina iespēju labot objektu ontoloģiskās saites informāciju */
+	/* 
+	 * FUNKCIJA
+	 * 
+	 * Nosaukums: editEntityOntology
+	 * Funkcija: Objektu ontoloģiskās saites informācijas labošana
+	 * Parametri:
+	 * 			$intEntityID - objekta identifikators
+	 * 			(POST)
+	 * 				ontology_id - ontoloģisiki saistītā objekta identifikators
+	 * 				ontology_comment - objektu ontoloģijas komentārs
+	*/
 	public function editEntityOntology($intEntityID)
 	{
 		if (checkSession($this))
 		{
 			$intOntEntityID = $this->input->post('ontology_id');
 			$strComment = $this->input->post('ontology_comment', TRUE);
+			
 			$this->entity_model->updateEntityOntology($intEntityID, $intOntEntityID, $strComment);
 		}
 	}
 	
-	/* Funkcija nodrošina iespēju labot objektu ontoloģiskās saites informāciju */
+	/*
+	 * FUNKCIJA
+	 * 
+	 * Nosaukums: editEntityResource
+	 * Funkcija: Objekta resursa informācijas labošana
+	 * Parametri:
+	 * 			$intEntityID - objekta identifikators
+	 * 			(POST)
+	 * 				resource_id - objekta resursa identifikators
+	 * 				resource_comment - objekta resursa komentārs
+	*/
 	public function editEntityResource($intEntityID)
 	{
 		if (checkSession($this))
 		{
 			$intResourceID = $this->input->post('resource_id');
 			$strComment = $this->input->post('resource_comment', TRUE);
+			
 			$this->entity_model->updateEntityResource($intEntityID, $intResourceID, $strComment);
 		}
 	}
 	
-	
-	/* Funkcija nodrošina iespēju dzēst objektu */
+	/* 
+	 * FUNKCIJA
+	 * 
+	 * Nosaukums: deleteEntity
+	 * Funkcija: Objekta dzēšana
+	 * Parametri:
+	 * 			$intEntityID - objekta identifikators
+	*/
 	public function deleteEntity($intEntityID)
 	{
 		if (checkSession($this))
 		{
 			$this->entity_model->deleteEntity($intEntityID);
+			
 			$this->load->view('deleted_view', array('object' => 'entity'));
 		}
 	}
 	
-	/* Funkcija nodrošina iespēju dzēst objekta un nosaukuma saites informāciju */
+	/* 
+	 * FUNKCIJA
+	 * 
+	 * Nosaukums: deleteEntityName
+	 * Funkcija: Objekta un nosaukuma saites dzēšana
+	 * Parametri:
+	 * 			$intEntityID - objekta identifikators
+	 * 			(POST)
+	 * 				name_id - nosaukuma identifikators
+	*/
 	public function deleteEntityName($intEntityID)
 	{
 		if (checkSession($this))
 		{
 			$intNameID = $this->input->post('name_id');
+			
 			$this->entity_model->deleteEntityName($intEntityID, $intNameID);
 		}
 	}
 	
-	/* Funkcija nodrošina iespēju dzēst objektu ontoloģiskās saites informāciju */
+	/* 
+	 * FUNKCIJA
+	 * 
+	 * Nosaukums: deleteEntityOntology
+	 * Funkcija: Objektu ontoloģiskās saites dzēšana 
+	 * Parametri:
+	 * 			$intEntityID - objekta identifikators
+	 * 			(POST)
+	 * 				ontology_id - ontoloģiski saistītā objekta identifikators
+	*/
 	public function deleteEntityOntology($intEntityID)
 	{
 		if (checkSession($this))
 		{
 			$intOntEntityID = $this->input->post('ontology_id');
+			
 			$this->entity_model->deleteEntityOntology($intEntityID, $intOntEntityID);
 		}
 	}
 	
-	/* Funkcija nodrošina iespēju dzēst objekta un resursa saites informāciju */
+	/* 
+	 * FUNKCIJA
+	 * 
+	 * Nosaukums: deleteEntityResource
+	 * Funkcija: Objekta un resursa saites dzēšana 
+	 * Parametri:
+	 * 			$intEntityID - objekta identifikators
+	 * 			(POST)
+	 * 				resource_id - resursa identifikators
+	*/
 	public function deleteEntityResource($intEntityID)
 	{
 		if (checkSession($this))
 		{
 			$intResourceID = $this->input->post('resource_id');
+			
 			$this->entity_model->deleteEntityResource($intEntityID, $intResourceID);
 		}
 	}
 	
-	
-	
-	/* Funkcija nodrošina iespēju pievienot objektam nosaukumu */
+	/* 
+	 * FUNKCIJA
+	 * 
+	 * Nosaukums: addEntityName
+	 * Funkcija: Objekta nosaukuma pievienošana
+	 * Parametri:
+	 * 			$intEntityID - objekta identifikators
+	 * 			(POST)
+	 * 				name - nosaukums
+	 * 				name_comment - objekta un nosaukuma saites komentārs
+	 * 				name_time_from - nosaukuma lietošanas laiks no
+	 * 				name_time_to - nosaukuma lietošanas laiks līdz
+	*/
 	public function addEntityName($intEntityID)
 	{
 		if (checkSession($this))
@@ -254,7 +405,17 @@ class Entity extends CI_Controller
 		}
 	}
 	
-	/* Funkcija nodrošina iespēju pievienot objektam ontoloģisku objektu */
+	/* 
+	 * FUNKCIJA
+	 * 
+	 * Nosaukums: addEntityOntology
+	 * Funkcija: Ontoloģiski saistīta objekta saites pievienošana
+	 * Parametri:
+	 * 			$intEntityID - objekta identifikators
+	 * 			(POST)
+	 * 				ontology_id - ontoloģiski saistītā objekta identifikators
+	 * 				ontology_comment - objektu ontoloģijas komentārs
+	*/
 	public function addEntityOntology($intEntityID)
 	{
 		if (checkSession($this))
@@ -262,7 +423,8 @@ class Entity extends CI_Controller
 			$arrOutputData['intOntologyID'] = $this->input->post('ontology_id', TRUE);
 			$arrOutputData['strOntologyComment'] = $this->input->post('ontology_comment', TRUE);
 			
-			if (!is_numeric($arrOutputData['intOntologyID']) || !ctype_digit($arrOutputData['intOntologyID']) || !$this->entity_model->checkIfIsEntity($arrOutputData['intOntologyID'])) // pārbauda padotā ID vērtību
+			// Pārbauda padotā ID vērtību
+			if (!is_numeric($arrOutputData['intOntologyID']) || !ctype_digit($arrOutputData['intOntologyID']) || !$this->entity_model->checkIfIsEntity($arrOutputData['intOntologyID']))
 			{
 				$arrOutputData['strOntologyError'] = "Ievadiet derīgu objekta ID!";
 			}
@@ -279,7 +441,18 @@ class Entity extends CI_Controller
 		}	
 	}
 	
-	/* Funkcija nodrošina iespēju pievienot objektam resursu */
+	/* 
+	 * FUNKCIJA
+	 * 
+	 * Nosaukums: addEntityResource
+	 * Funkcija: Resursa pievienošana objektam
+	 * Parametri:
+	 * 			$intEntityID - objekta identifikators
+	 * 			(POST)
+	 * 				resource_name - resursa nosaukums
+	 * 				resource_ref - norāde uz resursu
+	 * 				resource_comment - resursa komentārs
+	*/
 	public function addEntityResource($intEntityID)
 	{
 		if (checkSession($this))

@@ -1,11 +1,4 @@
 <?php
-/**
- * Fails: entity_model.php
- * Autors: Madara Paegle
- * Radīts: 2012.02.12
- * Pēdējās izmaiņas: 2012.05.23.
- *
- */
 
 /*
 * Klase Entity_model
@@ -20,6 +13,7 @@ class Entity_model extends CI_Model
 	 */
 	public function getEntityData($intEntityID)
 	{
+		$intEntityID = intval($intEntityID);
 		/* start: objekta dati */
 		$strSQL = "SELECT e.ID, e.definition, e.time, c.name AS category, c.ID AS categoryID FROM entity e, category c WHERE e.ID = '$intEntityID' AND c.ID = e.categoryID; ";
 		$arrResult = $this->db->query($strSQL)->result_array();
@@ -27,7 +21,7 @@ class Entity_model extends CI_Model
 		/* end: objekta dati */
 	
 		/* start: objekta nosaukumi */
-		$strSQL = "SELECT n.ID, n.name, en.comment, en.timeFrom, en.timeTo, (SELECT SUM(nd.occurrences) FROM nameDocument nd WHERE nd.nameID = n.ID) as totalOccurrences
+		$strSQL = "SELECT n.ID, n.totalOccurrences, n.name, en.comment, en.timeFrom, en.timeTo
 					FROM name n, entityName en 
 					WHERE en.entityID = $intEntityID AND n.ID = en.nameID 
 					ORDER BY totalOccurrences DESC, name ASC; ";
@@ -70,6 +64,10 @@ class Entity_model extends CI_Model
 	 */
 	public function insertEntity($strDefinition, $strTime, $intCategory)
 	{
+		$strDefinition = addslashes($strDefinition);
+		$strTime = addslashes($strTime);
+		$intCategory = intval($intCategory);
+		
 		// pārbauda, vai jau ir objekts ar tādiem datiem
 		$strSQL = "SELECT ID FROM entity WHERE definition = '$strDefinition' AND time = '$strTime' AND categoryID = '$intCategory';";
 		$arrResult = $this->db->query($strSQL)->result_array();
@@ -94,6 +92,8 @@ class Entity_model extends CI_Model
 	 */
 	public function checkIfIsEntity($intEntityID)
 	{
+		$intEntityID = intval($intEntityID);
+		
 		$strSQL = "SELECT ID FROM entity WHERE ID = '$intEntityID';";
 		$arrResult = $this->db->query($strSQL)->result_array();
 		if (sizeof($arrResult) > 0)
@@ -118,6 +118,11 @@ class Entity_model extends CI_Model
 	 */
 	public function updateEntity($intEntityID, $strDefinition, $strTime, $intCategory)
 	{
+		$intEntityID = intval($intEntityID);
+		$strDefinition = addslashes($strDefinition);
+		$strTime = addslashes($strTime);
+		$intCategory = intval($intCategory);
+		
 		// pārbauda, vai jau nav cits objekts ar šādiem datiem
 		$strSQL = "SELECT ID FROM entity WHERE ID != '$intEntityID' AND definition = '$strDefinition' AND time = '$strTime' AND categoryID = '$intCategory';";
 		$arrResult = $this->db->query($strSQL)->result_array();
@@ -159,6 +164,8 @@ class Entity_model extends CI_Model
 	 */
 	public function deleteEntity($intEntityID)
 	{
+		$intEntityID = intval($intEntityID);
+		
 		$strSQL = "DELETE FROM entityName WHERE entityID = '$intEntityID';"; // idzēš objekta-nosaukuma saites
 		$this->db->query($strSQL);
 		
@@ -174,6 +181,8 @@ class Entity_model extends CI_Model
 	
 	public function insertName($strName)
 	{
+		$strName = addslashes($strName);
+		
 		// pārbauda, vai ir jau datu bāzē
 		$strSQL = "SELECT ID FROM name WHERE name = '$strName';";
 		$arrResult = $this->db->query($strSQL)->result_array();
@@ -192,6 +201,12 @@ class Entity_model extends CI_Model
 	
 	public function insertEntityName($intEntityID, $intAltName, $strAltComment, $strTimeFrom, $strTimeTo)
 	{
+		$intEntityID = intval($intEntityID);
+		$intAltName = intval($intAltName);
+		$strAltComment = addslashes($strAltComment);
+		$strTimeFrom = addslashes($strTimeFrom);
+		$strTimeTo = addslashes($strTimeTo);
+		
 		// vai ir sasaistīts ar objektu
 		$strSQL = "SELECT nameID FROM entityName WHERE nameID = '$intAltName' AND entityID = '$intEntityID';";
 		$arrResult = $this->db->query($strSQL)->result_array();
@@ -211,6 +226,10 @@ class Entity_model extends CI_Model
 	
 	public function insertEntityResource($intEntityID, $intResID, $strComment)
 	{
+		$intEntityID = intval($intEntityID);
+		$intResID = intval($intResID);
+		$strComment = addslashes($strComment);
+		
 		// vai ir sasaistīts ar objektu
 		$strSQL = "SELECT entityID FROM entityResource WHERE resourceID = '$intResID' AND entityID = '$intEntityID';";
 		$arrResult = $this->db->query($strSQL)->result_array();
@@ -229,6 +248,9 @@ class Entity_model extends CI_Model
 	
 	public function insertResource($strName, $strRef)
 	{
+		$strName = addslashes($strName);
+		$strRef = addslashes($strRef);
+		
 		// pārbauda, vai ir jau datu bāzē
 		$strSQL = "SELECT ID FROM resource WHERE name = '$strName' AND reference = '$strRef';";
 		$arrResult = $this->db->query($strSQL)->result_array();
@@ -247,18 +269,31 @@ class Entity_model extends CI_Model
 	
 	public function deleteEntityName($intEntityID, $intNameID)
 	{
+		$intEntityID = intval($intEntityID);
+		$intNameID = intval($intNameID);
+		
 		$strSQL = "DELETE FROM entityName WHERE entityID = '$intEntityID' AND nameID = '$intNameID';";
 		$this->db->query($strSQL);
 	}
 	
 	public function updateEntityName($intEntityID, $intNameID, $strComment, $strTimeFrom, $strTimeTo)
 	{
+		$intEntityID = intval($intEntityID);
+		$intNameID = intval($intNameID);
+		$strComment = addslashes($strComment);
+		$strTimeFrom = addslashes($strTimeFrom);
+		$strTimeTo = addslashes($strTimeTo);
+		
 		$strSQL = "UPDATE entityName SET comment = '". htmlspecialchars($strComment) ."', timeFrom = '". htmlspecialchars($strTimeFrom) ."', timeTo = '". htmlspecialchars($strTimeTo) ."' WHERE entityID = '$intEntityID' AND nameID = '$intNameID';";
 		$this->db->query($strSQL);
 	}
 	
 	public function insertEntityOntology($intEntityID, $intOntID, $strOntComment)
 	{
+		$intEntityID = intval($intEntityID);
+		$intOntID = intval($intOntID);
+		$strOntComment = addslashes($strOntComment);
+		
 		// pārbauda, vai jau nav sasaistīti
 		$strSQL = "SELECT * FROM entityOntology WHERE (entity1ID = $intEntityID AND entity2ID = $intOntID) OR (entity1ID = $intOntID AND entity2ID = $intEntityID);";
 		$arrResult = $this->db->query($strSQL)->result_array();
@@ -276,24 +311,38 @@ class Entity_model extends CI_Model
 	
 	public function deleteEntityOntology($intEntityID, $intOntEntityID)
 	{
+		$intEntityID = intval($intEntityID);
+		$intOntEntityID = intval($intOntEntityID);
+		
 		$strSQL = "DELETE FROM entityOntology WHERE (entity1ID = '$intEntityID' AND entity2ID = '$intOntEntityID') OR (entity1ID = '$intOntEntityID' AND entity2ID = '$intEntityID') ;";
 		$this->db->query($strSQL);	
 	}
 	
 	public function updateEntityOntology($intEntityID, $intOntEntityID, $strComment)
 	{
+		$intEntityID = intval($intEntityID);
+		$intOntEntityID = intval($intOntEntityID);
+		$strComment = addslashes($strComment);
+		
 		$strSQL = "UPDATE entityOntology SET comment = '". htmlspecialchars($strComment) ."' WHERE (entity1ID = '$intEntityID' AND entity2ID = '$intOntEntityID') OR (entity1ID = '$intOntEntityID' AND entity2ID = '$intEntityID') ;";
 		$this->db->query($strSQL);
 	}
 	
 	public function deleteEntityResource($intEntityID, $intResID)
 	{
+		$intEntityID = intval($intEntityID);
+		$intResID = intval($intResID);
+		
 		$strSQL = "DELETE FROM entityResource WHERE entityID = '$intEntityID' AND resourceID = '$intResID';";
 		$this->db->query($strSQL);
 	}
 	
 	public function updateEntityResource($intEntityID, $intResID, $strComment)
 	{
+		$intEntityID = intval($intEntityID);
+		$intResID = intval($intResID);
+		$strComment = addslashes($strComment);
+		
 		$strSQL = "UPDATE entityResource SET comment = '". htmlspecialchars($strComment) ."' WHERE entityID = '$intEntityID' AND resourceID = '$intResID';";
 		$this->db->query($strSQL);
 	}
