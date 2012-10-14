@@ -148,7 +148,8 @@ class Search extends CI_Controller
 
 		
 		// Ierakstu skaits vienā lapā
-		if ($this->input->get('row_count_per_page', TRUE) == 20 || $this->input->get('row_count_per_page', TRUE) == 40)
+		$arrRowCounts = array(10, 20, 25, 30, 35, 40, 50, 60, 70, 80, 90, 100);
+		if (in_array($this->input->get('row_count_per_page', TRUE), $arrRowCounts))
 		{
 			$intRowCountPerPage = (int)$this->input->get('row_count_per_page', TRUE);
 		}
