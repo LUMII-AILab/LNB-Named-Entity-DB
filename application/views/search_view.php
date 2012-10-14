@@ -24,8 +24,8 @@
 						<tbody>
 							<tr>
 								<td align="left" style="vertical-align: middle; ">
-									<button type="button" class="paginatorWhiteCountButtons">
-										<div <?php if ($intPageNum != 1) echo "onclick=\"document.getElementById('pageNum').value='".($intPageNum-1)."'; document.forms['paginatorForm'].submit();\"" ?> style="margin:0 -4px 0 -3px;">&lt;</div>
+									<button type="button" class="paginatorWhiteCountButtons" <?php if ($intPageNum != 1) echo "onclick=\"document.getElementById('pageNum').value='".($intPageNum-1)."'; document.forms['paginatorForm'].submit();\"" ?>>
+										<div style="margin:0 -4px 0 -3px;">&lt;</div>
 									</button>
 								</td>
 								<td align="left" style="vertical-align: middle; ">
@@ -38,8 +38,8 @@
 									<div class="gwt-Label">no <?=(ceil($intRowsCount/$intRowCountPerPage));?></div>
 								</td>
 								<td align="left" style="vertical-align: middle; ">
-									<button type="button" class="paginatorWhiteCountButtons">
-										<div <?php if ($intPageNum != ceil($intRowsCount/$intRowCountPerPage)) echo "onclick=\"document.getElementById('pageNum').value='". ($intPageNum+1) ."'; document.forms['paginatorForm'].submit();\"" ?> style="margin:0 -4px 0 -3px;">&gt;</div>
+									<button type="button" class="paginatorWhiteCountButtons" <?php if ($intPageNum != ceil($intRowsCount/$intRowCountPerPage) && $intRowsCount != 0) echo "onclick=\"document.getElementById('pageNum').value='". ($intPageNum+1) ."'; document.forms['paginatorForm'].submit();\"" ?>>
+										<div style="margin:0 -4px 0 -3px;">&gt;</div>
 									</button>
 								</td>
 							</tr>
@@ -60,14 +60,20 @@
 									<div class="gwt-Label">Rādīt lapā:</div>
 								</td>
 								<td align="left" style="vertical-align: middle; ">
-									<button type="button" class="<?php if ($intRowCountPerPage == 20) echo 'paginatorBlackCountButtons'; else echo 'paginatorWhiteCountButtons'; ?>">
-										<div onclick="document.getElementById('row_count_per_page').value='20'; document.forms['paginatorForm'].submit();"  style="margin:0 -4px 0 -3px;">20</div>
-									</button>
-								</td>
-								<td align="left" style="vertical-align: middle; ">
-									<button type="button" class="<?php if ($intRowCountPerPage == 40) echo 'paginatorBlackCountButtons'; else echo 'paginatorWhiteCountButtons'; ?>">
-										<div onclick="document.getElementById('row_count_per_page').value='40'; document.forms['paginatorForm'].submit();" style="margin:0 -4px 0 -3px;">40</div>
-									</button>
+									<select onchange="document.getElementById('row_count_per_page').value=this.value; document.forms['paginatorForm'].submit();">
+										<option value="10" <?php if ($intRowCountPerPage == 10) echo 'selected';?>>10</option>
+										<option value="20" <?php if ($intRowCountPerPage == 20) echo 'selected';?>>20</option>
+										<option value="25" <?php if ($intRowCountPerPage == 25) echo 'selected';?>>25</option>
+										<option value="30" <?php if ($intRowCountPerPage == 30) echo 'selected';?>>30</option>
+										<option value="35" <?php if ($intRowCountPerPage == 35) echo 'selected';?>>35</option>
+										<option value="40" <?php if ($intRowCountPerPage == 40) echo 'selected';?>>40</option>
+										<option value="50" <?php if ($intRowCountPerPage == 50) echo 'selected';?>>50</option>
+										<option value="60" <?php if ($intRowCountPerPage == 60) echo 'selected';?>>60</option>
+										<option value="70" <?php if ($intRowCountPerPage == 70) echo 'selected';?>>70</option>
+										<option value="80" <?php if ($intRowCountPerPage == 80) echo 'selected';?>>80</option>
+										<option value="90" <?php if ($intRowCountPerPage == 90) echo 'selected';?>>90</option>
+										<option value="100" <?php if ($intRowCountPerPage == 100) echo 'selected';?>>100</option>
+									</select>
 								</td>
 							</tr>
 						</tbody>
@@ -167,8 +173,8 @@
 						<tbody>
 							<tr>
 								<td align="left" style="vertical-align: middle; ">
-									<button type="button" class="paginatorWhiteCountButtons">
-										<div <?php if ($intPageNum != 1) echo "onclick=\"document.getElementById('pageNum').value='".($intPageNum-1)."'; document.forms['paginatorForm'].submit();\"" ?> style="margin:0 -4px 0 -3px;">&lt;</div>
+									<button type="button" class="paginatorWhiteCountButtons" <?php if ($intPageNum != 1) echo "onclick=\"document.getElementById('pageNum').value='".($intPageNum-1)."'; document.forms['paginatorForm'].submit();\"" ?>>
+										<div style="margin:0 -4px 0 -3px;">&lt;</div>
 									</button>
 								</td>
 								<td align="left" style="vertical-align: middle; ">
@@ -181,8 +187,8 @@
 									<div class="gwt-Label">no <?=(ceil($intRowsCount/$intRowCountPerPage));?></div>
 								</td>
 								<td align="left" style="vertical-align: middle; ">
-									<button type="button" class="paginatorWhiteCountButtons">
-										<div <?php if ($intPageNum != ceil($intRowsCount/$intRowCountPerPage)) echo "onclick=\"document.getElementById('pageNum').value='". ($intPageNum+1) ."'; document.forms['paginatorForm'].submit();\"" ?> style="margin:0 -4px 0 -3px;">&gt;</div>
+									<button type="button" class="paginatorWhiteCountButtons" <?php if ($intPageNum != ceil($intRowsCount/$intRowCountPerPage) && $intRowsCount != 0) echo "onclick=\"document.getElementById('pageNum').value='". ($intPageNum+1) ."'; document.forms['paginatorForm'].submit();\"" ?>>
+										<div style="margin:0 -4px 0 -3px;">&gt;</div>
 									</button>
 								</td>
 							</tr>
@@ -203,14 +209,20 @@
 									<div class="gwt-Label">Rādīt lapā:</div>
 								</td>
 								<td align="left" style="vertical-align: middle; ">
-									<button type="button" class="<?php if ($intRowCountPerPage == 20) echo 'paginatorBlackCountButtons'; else echo 'paginatorWhiteCountButtons'; ?>">
-										<div onclick="document.getElementById('row_count_per_page').value='20'; document.forms['paginatorForm'].submit();"  style="margin:0 -4px 0 -3px;">20</div>
-									</button>
-								</td>
-								<td align="left" style="vertical-align: middle; ">
-									<button type="button" class="<?php if ($intRowCountPerPage == 40) echo 'paginatorBlackCountButtons'; else echo 'paginatorWhiteCountButtons'; ?>">
-										<div onclick="document.getElementById('row_count_per_page').value='40'; document.forms['paginatorForm'].submit();" style="margin:0 -4px 0 -3px;">40</div>
-									</button>
+									<select onchange="document.getElementById('row_count_per_page').value=this.value; document.forms['paginatorForm'].submit();">
+										<option value="10" <?php if ($intRowCountPerPage == 10) echo 'selected';?>>10</option>
+										<option value="20" <?php if ($intRowCountPerPage == 20) echo 'selected';?>>20</option>
+										<option value="25" <?php if ($intRowCountPerPage == 25) echo 'selected';?>>25</option>
+										<option value="30" <?php if ($intRowCountPerPage == 30) echo 'selected';?>>30</option>
+										<option value="35" <?php if ($intRowCountPerPage == 35) echo 'selected';?>>35</option>
+										<option value="40" <?php if ($intRowCountPerPage == 40) echo 'selected';?>>40</option>
+										<option value="50" <?php if ($intRowCountPerPage == 50) echo 'selected';?>>50</option>
+										<option value="60" <?php if ($intRowCountPerPage == 60) echo 'selected';?>>60</option>
+										<option value="70" <?php if ($intRowCountPerPage == 70) echo 'selected';?>>70</option>
+										<option value="80" <?php if ($intRowCountPerPage == 80) echo 'selected';?>>80</option>
+										<option value="90" <?php if ($intRowCountPerPage == 90) echo 'selected';?>>90</option>
+										<option value="100" <?php if ($intRowCountPerPage == 100) echo 'selected';?>>100</option>
+									</select>
 								</td>
 							</tr>
 						</tbody>
