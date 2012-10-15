@@ -112,13 +112,13 @@ class Name_documents extends CI_Controller
 				
 				
 				// Rindu skaits vienā lapā
-				if ($this->input->post('row_count_per_page', TRUE))
+				$arrRowCounts = array(10, 20, 25, 30, 35, 40, 50, 60, 70, 80, 90, 100);
+				if (in_array($this->input->get('row_count_per_page', TRUE), $arrRowCounts))
 				{
-					$intRowCountPerPage = (int)$this->input->post('row_count_per_page', TRUE);
+					$intRowCountPerPage = (int)$this->input->get('row_count_per_page', TRUE);
 				}
 				else
 				{
-					// Pēc noklusējuma tiek rādīti 40 ieraksti
 					$intRowCountPerPage = 40;
 				}
 				$arrOutputData['intRowCountPerPage'] = $intRowCountPerPage;
