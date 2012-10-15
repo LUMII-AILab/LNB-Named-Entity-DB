@@ -19,7 +19,7 @@
 						<div>
 							<div class="mainHeader">
 								<div class="mainHeaderButtons">
-									<a href="/laboratorija">
+									<a href="http://laboratorija.lndb.lv">
 										<div class="headerMenu_7_lv"></div>
 									</a>
 									<a href="#">
@@ -58,7 +58,7 @@
 									<div>
 										<div class="contentLeft">
 											<span>
-												<a href="#"> 
+												<a href="http://lvadb.lndb.lv/"> 
 													<div class="logo"></div> 
 												</a>
 											</span>
@@ -66,34 +66,37 @@
 											<div class="searchBox"> 
 												<div class="heading">Nosaukumu datu bāze</div>
 												<div class="data">
-													<a href="/namedEntityDB/rdf_xml">RDF/XML</a>
-													<a href="/namedEntityDB/browse">Meklēšana</a>
+													<a href="http://lvadb.lndb.lv/namedEntityDB/rdf_xml">RDF/XML</a>
+													<a href="http://lvadb.lndb.lv/namedEntityDB/">Meklēšana</a>
 													<?php if ($this->session->userdata("logged_in")) :?>
-													<a href="/namedEntityDB/add_new_entity">Pievienot jaunu objektu</a>
+														<a href="/namedEntityDB/add_new_entity">Pievienot jaunu objektu</a>
 													<?php endif;?>
 												</div>
 											</div>
+											
 											<div class="searchBox"> 
-												<div class="heading">Nosaukumu marķētājs</div>
+												<div class="heading">Teksta korpusi</div>
 												<div class="data">
-													<a class="gwt-Anchor" href="http://lnb.ailab.lv/NERmarketajs/">Nosaukumu marķēšana</a>
-													<a class="gwt-Anchor" href="http://lnb.ailab.lv/NERmarketajs/compare.php">Nomarķētā salīdzināšana</a>
+													<a href="http://korpuss.lnb.lv/">Korpusa meklēšana</a>
+													<a href="http://korpuss.lnb.lv/bonito/run.cgi/first_form">Bonito pieeja</a>
 												</div>
 											</div>
-											<div class="searchBox"> 
+											
+											<div class="searchBox" style="display:none"> 
 												<div class="heading">Senvārdu transliterācija</div>
 												<div class="data">
 													<a class="gwt-Anchor" href="http://lnb.ailab.lv:8182/normalize/core/vuschka">Transliterācijas serviss</a>
-													<a class="gwt-Anchor" href="http://lnb.ailab.lv:8182/explain/ūda">Nomarķētā salīdzināšana</a>
+													<a class="gwt-Anchor" href="http://lnb.ailab.lv:8182/explain/ūda">Vārda skaidrojums</a>
 												</div>
 											</div>
-											<div class="searchBox"> 
+											<div class="searchBox" style="display:none"> 
 												<div class="heading">Morfoloģiskā analīze</div>
 												<div class="data">
 													<a class="gwt-Anchor" href="http://lnb.ailab.lv:8182/analyze/balta">Viena vārda analīze</a>
 													<a class="gwt-Anchor" href="http://lnb.ailab.lv:8182/tokenize/balta">Analīze ar tokenizāciju</a>
 												</div>
 											</div>
+
 										</div>
 										<div class="contentRight">
 											<form id="searchForm" action="/namedEntityDB/browse" method="GET" style="margin-top: 1px;">
@@ -109,17 +112,7 @@
 													<label id="cat_2_label" for="cat_2" onclick="changeColor(this, 2)" style="color: rgb(167, 170, 179)">Vieta</label>
 													<input id="cat_2" type="checkbox" name="category" value="2" />|
 													<label id="cat_3_label" for="cat_3" onclick="changeColor(this, 3)" style="color: rgb(167, 170, 179)">Organizācija</label>
-													<input id="cat_3" type="checkbox" name="category" value="3" />|
-													<label id="cat_4_label" for="cat_4" onclick="changeColor(this, 4)" style="color: rgb(167, 170, 179)">Iestāde</label>
-													<input id="cat_4" type="checkbox" name="category" value="4" />|
-													<label id="cat_5_label" for="cat_5" onclick="changeColor(this, 5)" style="color: rgb(167, 170, 179)">Notikums</label>
-													<input id="cat_5" type="checkbox" name="category" value="5" />|
-													<label id="cat_6_label" for="cat_6" onclick="changeColor(this, 6)" style="color: rgb(167, 170, 179)">Produkts</label>
-													<input id="cat_6" type="checkbox" name="category" value="6" />|
-													<label id="cat_7_label" for="cat_7" onclick="changeColor(this, 7)" style="color: rgb(167, 170, 179)">Laiks</label>
-													<input id="cat_7" type="checkbox" name="category" value="7" />|
-													<label id="cat_8_label" for="cat_8" onclick="changeColor(this, 8)" style="color: rgb(167, 170, 179)">Citi</label>
-													<input id="cat_8" type="checkbox" name="category" value="8" />
+													<input id="cat_3" type="checkbox" name="category" value="3" />
 												</div>
 												
 												<div class="mainHeaderSearch1">

@@ -78,7 +78,7 @@
 .close{
 	cursor: pointer;
 	float: right; 
-	padding: 5px;"
+	padding: 5px;
 }
 
 error{
@@ -120,7 +120,7 @@ div.commonSearchTitle1{
 		font-family: Tahoma; 
 		font-size: 15px; 
 		font-weight: normal;
-		padding: 17px 30px 19px 30px;
+		padding: 17px 30px 17px 30px;
 	}
 	div.mainHeaderSearch1 div div{
 		display: inline-block;
@@ -232,4 +232,28 @@ div#nameEntities{
 	background-color: white; 
 	padding: 10px; 
 	border: 1px solid #A5A9B2;
+}
+
+div.homeHeader{
+	float: left;
+	height: 100px; 
+}
+
+div.homeHeader div{
+	padding: 40px 100px 40px 100px; 
+	text-align: center;
+	font-size: 14px;
+}
+div.homeBody{
+	height: 184px; 
+	background-color: #EDEEF0;
+}
+div.homeBody div{
+	float: left;
+	height: 100%;
+}
+div.homeBody div div{
+	padding: 20px; 
+	font-size: 12px; 
+	text-align: justify;
 }

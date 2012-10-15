@@ -49,8 +49,8 @@ $active_group = 'default';
 $active_record = TRUE;
 
 $db['default']['hostname'] = '127.0.0.1';
-$db['default']['username'] = 'root';
-$db['default']['password'] = 'pbGhFG0U';
+$db['default']['username'] = 'namedEntityDB';
+$db['default']['password'] = 'RV4rNcU3SRupVC3m';
 $db['default']['database'] = 'namedEntityDB';
 $db['default']['dbdriver'] = 'mysqli';
 $db['default']['dbprefix'] = '';
