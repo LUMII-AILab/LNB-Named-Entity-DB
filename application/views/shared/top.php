@@ -146,7 +146,7 @@
 									
 													obj.style.color = '#4C5666';
 													el.checked = true;
-													for(var i=0; i < 9; i++)
+													for(var i=0; i < 4; i++)
 													{
 														if (i != id)
 														{
