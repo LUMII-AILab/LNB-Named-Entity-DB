@@ -76,7 +76,7 @@ class Rdf_xml_model extends CI_Model
 	public function getNamesByName($strName)
 	{
 		$strName = addslashes($strName);
-		
+
 		$strSQL = "SELECT * FROM `name` WHERE MATCH(`name`) AGAINST('$strName');";
 	
 		$arrNames = $this->db->query($strSQL)->result_array();
@@ -228,7 +228,34 @@ class Rdf_xml_model extends CI_Model
 			return FALSE;
 		}
 	}
+
+	/*
+	 * Funkcija atgriež masīvu ar entītiju skaitiem pa kategorijām
+	 */	
+	public function getEntityCounts()
+	{
+		$strSQL = "select name, count(*) from entity join category on categoryid = category.ID group by name";
+		$arrEntityCounts = $this->db->query($strSQL)->result_array();
+		return $arrEntityCounts;
+	}
 	
+	/*
+	 * Funkcija atgriež skaitu ar nosaukumiem
+	 */	
+	public function getNameCount()
+	{
+		$strSQL = "select count(*) from name";
+		$arrResult = $this->db->query($strSQL)->result_array();
+		if(sizeof($arrResult) > 0)
+		{
+			$intCount = $arrResult[0]['count(*)'];
+			return $intCount;
+		}
+		else
+		{
+			return FALSE;
+		}
+	}
 }
 
 ?>

@@ -88,5 +88,6 @@ $route['name/'] = "rdf_xml/showNameData/";
 $route['name'] = "rdf_xml/showNameData";
 $route['name/(:any)'] = "rdf_xml/showNameData/$1";
 
+$route['stats'] = "rdf_xml/showStats";
 /* End of file routes.php */
 /* Location: ./application/config/routes.php */

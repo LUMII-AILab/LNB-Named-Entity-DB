@@ -132,12 +132,14 @@ class Rdf_xml extends CI_Controller
 	* Nosaukums: showSearchedNames
 	* Funkcija: izveido sarakstu ar atrastajiem īpašvārdiem RDF/XML formātā
 	* Parametri:
-	* 			$strName - meklējamais īpašvārs
+	* 			$strName - meklējamais īpašvārds
 	* 			(POST)
-	* 				name - meklējamais īpašvārs
+	* 				name - meklējamais īpašvārds
 	*/
 	public function showSearchedNames($strName ='')
 	{
+		$strName = urldecode($strName);
+
 		if ($this->input->post('name', TRUE)) // gadījumā, ja meklējums tiek pieprasīts caur lietotāja saskarnes RDF/XML skata formu
 		{
 			$strName = $this->input->post('name', TRUE);
@@ -298,5 +300,49 @@ class Rdf_xml extends CI_Controller
 	
 		$this->load->view('rdf_xml_view', array('strXML' => $strXML));
 	}
+
+
+	/*
+	* FUNKCIJA
+	*
+	* Nosaukums: showStats
+	* Funkcija: parāda datu bāzes statistiku RDF/XML formātā
+	* Parametri: nav
+	* 				
+	*/
+	public function showStats()
+	{
+		$strXML = '<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:ne="http://lnb.ailab.lv/ne#">';
+		
+		$entityCount = 0;
+		$persCount = 0;
+		$orgCount = 0;
+		$locCount = 0;
+		$nameCount = 0;
+				
+		$arrCategories = $this->rdf_xml_model->getEntityCounts(); // izsauc modeļa funkciju, kas atgriež entīšu skaitus pa kategorijām
+		foreach ($arrCategories as $arrCategory) // pievieno info par katru īpašvārdu faila saturam
+		{
+			$categoryName = $arrCategory['name'];
+			$count = $arrCategory['count(*)'];
+			$entityCount += $count;
+		 	if (!strncmp($categoryName, 'loc', 3)) $locCount += $count;
+		 	if (!strncmp($categoryName, 'org', 3)) $orgCount += $count;
+		 	if (!strncmp($categoryName, 'pers', 4)) $persCount += $count;
+		}
+
+ 		$strBasePath = 'http://'. $_SERVER['SERVER_NAME'];
+		$strXML .= '<rdf:Description rdf:about="'. $strBasePath .'/" ';
+		$strXML .= 'ne:entities="'. $entityCount .'" ';
+		$strXML .= 'ne:persons="'. $persCount .'" ';
+		$strXML .= 'ne:organizations="'. $orgCount .'" ';
+		$strXML .= 'ne:locations="'. $locCount .'" ';
+		$strXML .= 'ne:names="'. $this->rdf_xml_model->getNameCount() .'" />';
+
+		$strXML .= "</rdf:RDF>";
+	
+		$this->load->view('rdf_xml_view', array('strXML' => $strXML)); // RDF/XML formāta skata ielāde
+	}
+
 }
 ?>
