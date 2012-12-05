@@ -77,11 +77,18 @@ class Rdf_xml_model extends CI_Model
 	{
 		$strName = addslashes($strName);
 
-		$strSQL = "SELECT * FROM `name` WHERE MATCH(`name`) AGAINST('$strName');";
-	
-		$arrNames = $this->db->query($strSQL)->result_array();
-	
-		return $arrNames;
+
+		// $strSQL = "SELECT * FROM `name` WHERE `name` = '$strName';";
+		// $arrNames = $this->db->query($strSQL)->result_array();
+		// if (sizeof($arrNames) > 0) {
+		// 	return $arrNames;		
+		// } else {
+			$strName = str_ireplace("iela", "", $strName);
+			$strSQL = "SELECT * FROM `name` WHERE MATCH(`name`) AGAINST('$strName');";
+			$arrNames = $this->db->query($strSQL)->result_array();
+		
+			return $arrNames;
+		// }
 	}
 	
 	/*
@@ -114,7 +121,7 @@ class Rdf_xml_model extends CI_Model
 		$arrNames = array();
 	
 		$strSQL = "
-		SELECT n.ID, n.name
+		SELECT n.ID, n.name, en.timeFrom, en.timeTo
 		FROM name n, entityName en
 		WHERE en.nameID = n.ID
 		AND en.entityID = '". $intEntityID ."';";
@@ -256,6 +263,27 @@ class Rdf_xml_model extends CI_Model
 			return FALSE;
 		}
 	}
+
+	/*
+	 * Funkcija atgriež masīvu ar entītiju ID, kuras satur padoto simbolu virkni $strName
+	*/
+	public function getEntitiesByName($strName)
+	{
+		$strName = addslashes($strName);
+
+		$strSQL = "SELECT distinct entityID FROM `name` join entityName on name.ID = nameID WHERE `name` = '$strName';";
+		$arrNames = $this->db->query($strSQL)->result_array();
+		if (sizeof($arrNames) > 0) {
+			return $arrNames;		
+		} else {
+			$strName = str_ireplace("iela", "", $strName);
+			$strSQL = "SELECT distinct entityID FROM `name` join entityName on name.ID = nameID WHERE MATCH(`name`) AGAINST('$strName');";
+			$arrNames = $this->db->query($strSQL)->result_array();
+		
+			return $arrNames;
+		}
+	}
+	
 }
 
 ?>

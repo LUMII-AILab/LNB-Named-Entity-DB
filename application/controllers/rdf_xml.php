@@ -199,7 +199,10 @@ class Rdf_xml extends CI_Controller
  				$strXML .= '<ne:names rdf:parseType="Collection">';
 				foreach ($arrNames as $arrName)
 				{
-					$strXML .= '<rdf:Description rdf:about="'. $strBasePath .'/namedEntityDB/name/'. $arrName['ID'] .'" ne:name="'. htmlspecialchars($arrName['name']) .'" />';
+					$strXML .= '<rdf:Description rdf:about="'. $strBasePath .'/namedEntityDB/name/'. $arrName['ID'] .'" ne:name="'. htmlspecialchars($arrName['name']) .'"';
+					if ($arrName['timeFrom'] !== "") $strXML .= ' ne:from="' . $arrName['timeFrom'] . '"';
+					if ($arrName['timeTo'] !== "") $strXML .= ' ne:to="' . $arrName['timeTo'] . '"';
+					$strXML .= ' />';
 				}
 	  			$strXML .= '</ne:names>';
  			}
@@ -344,5 +347,76 @@ class Rdf_xml extends CI_Controller
 		$this->load->view('rdf_xml_view', array('strXML' => $strXML)); // RDF/XML formāta skata ielāde
 	}
 
+	/*
+	* FUNKCIJA
+	*
+	* Nosaukums: timeDict
+	* Funkcija: Laika jūtīgā vārdnīca - parāda [vecam] nosaukumam šī brīža aktuālo nosaukumu, vai arī nosaukumu, kas atbilst norādītajam gadam
+	*
+	* Parametri:
+	* 			$name - meklētais nosaukums
+	*			$year - gads, kura nosaukumu parādīt
+	* 			(POST)
+	* 				name - meklētais nosaukums
+	*				year - gads, kura nosaukumu parādīt
+	*/
+	public function timeDict($strName = '', $intYear = 0)
+	{
+		$strXML = '<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:ne="http://lnb.ailab.lv/ne#">';
+		
+		$strName = urldecode($strName);
+		$strBasePath = 'http://'. $_SERVER['SERVER_NAME'];
+
+		$arrEntityIDs = $this->rdf_xml_model->getEntitiesByName($strName);
+		foreach ($arrEntityIDs as $arrRow) {			
+			$intID = (int)$arrRow['entityID'];
+			$strDefinition = $this->rdf_xml_model->getEntityDefinition($intID);
+
+			if ($strDefinition !== FALSE)
+			{
+				$strXML .= '<rdf:Description rdf:about="'. $strBasePath .'/namedEntityDB/entity/'. $intID .'"> <ne:definition>'. htmlspecialchars($strDefinition) .'</ne:definition>';
+
+				$arrNames = $this->rdf_xml_model->getEntityNames($intID);
+	 			if (sizeof($arrNames) > 0)
+	 			{
+	 				$strXML .= '<ne:names rdf:parseType="Collection">';
+					foreach ($arrNames as $arrName)
+					{
+						$valid = TRUE;
+						$strNameXML = '<rdf:Description rdf:about="'. $strBasePath .'/namedEntityDB/name/'. $arrName['ID'] .'" ne:name="'. htmlspecialchars($arrName['name']) .'"';
+						if ($arrName['timeFrom'] !== "") {
+							$strNameXML .= ' ne:from="' . $arrName['timeFrom'] . '"';
+							if ((int)$arrName['timeFrom'] > $intYear) $valid = FALSE;
+						}
+						if ($arrName['timeTo'] !== "") {
+							$strNameXML .= ' ne:to="' . $arrName['timeTo'] . '"';
+							if ((int)$arrName['timeTo'] < $intYear) $valid = FALSE;
+						}
+						if ($arrName['timeTo'] == "" && $arrName['timeFrom'] == "") $valid = FALSE;
+						$strNameXML .= ' />';
+						if ($valid || $intYear == 0) $strXML .= $strNameXML;
+					}
+		  			$strXML .= '</ne:names>';
+	 			}
+				
+				$arrRelations = $this->rdf_xml_model->getEntityRelations($intID);
+				if (sizeof($arrRelations) > 0)
+				{
+					$strXML .= '<ne:relations rdf:parseType="Collection">';
+					foreach ($arrRelations as $arrRelation)
+					{
+						$strXML .= '<rdf:Description rdf:about="'. $strBasePath .'/namedEntityDB/entity/'. $arrRelation['ID'] .'" ne:definition="'. htmlspecialchars($arrRelation['definition']) .'" ne:relation="'. htmlspecialchars($arrRelation['comment']) .'" />';
+					}
+					$strXML .= "</ne:relations>";
+				}
+				
+				$strXML .= '</rdf:Description>';
+			}
+		}
+
+		$strXML .= "</rdf:RDF>";
+	
+		$this->load->view('rdf_xml_view', array('strXML' => $strXML)); // RDF/XML formāta skata ielāde
+	}
 }
 ?>

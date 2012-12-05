@@ -2,7 +2,6 @@
     RewriteEngine On
 	Options +FollowSymlinks
 	
-
     RewriteBase /namedEntityDB/
 	
 	RewriteCond %{REQUEST_URI} ^system.*
@@ -16,6 +15,8 @@
     RewriteRule ^(.*)$ index.php?/$1 [L]
 
 </IfModule>
+
+php_flag display_errors On
 
 <IfModule !mod_rewrite.c>
     ErrorDocument 404 /index.php
