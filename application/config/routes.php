@@ -89,6 +89,7 @@ $route['name'] = "rdf_xml/showNameData";
 $route['name/(:any)'] = "rdf_xml/showNameData/$1";
 
 $route['stats'] = "rdf_xml/showStats";
+$route['time_dict'] = "rdf_xml/timeDict";
 $route['time_dict/(:any)'] = "rdf_xml/timeDict/$1";
 $route['time_dict/(:any)/(:num)'] = "rdf_xml/timeDict/$1/$2";
 /* End of file routes.php */

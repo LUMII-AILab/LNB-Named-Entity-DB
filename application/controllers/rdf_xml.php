@@ -362,6 +362,15 @@ class Rdf_xml extends CI_Controller
 	*/
 	public function timeDict($strName = '', $intYear = 0)
 	{
+		if ($this->input->post('name', TRUE))
+		{
+			$strName = $this->input->post('name', TRUE);
+		}
+		if ($this->input->post('year', TRUE))
+		{
+			$intYear = $this->input->post('year', TRUE);
+		}
+		
 		$strXML = '<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:ne="http://lnb.ailab.lv/ne#">';
 		
 		$strName = urldecode($strName);

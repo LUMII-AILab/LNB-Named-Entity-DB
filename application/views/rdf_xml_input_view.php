@@ -22,6 +22,14 @@
 							</form>
 						</td>
 					</tr>
+					<tr>
+						<td>Statistika par datu bāzes saturu</td>
+						<td>
+							<form action='/namedEntityDB/stats' method="POST">
+								<input type='submit' value='Skatīt' />
+							</form>
+						</td>
+					</tr>
 				</table>
 				<hr />
 			</td>
@@ -63,6 +71,28 @@
 							</form>
 						</td>
 					</tr>
+				</table>
+				<hr>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<table style='font-size: 11px; '>
+					<form action='/namedEntityDB/time_dict' method='POST'>
+					<tr>
+						<td>Ievadiet nosaukumu laika jūtīgai meklēšanai:</td>
+						<td>
+								<input type='text' name='name' id='name' />
+								<input type='submit' value='Meklēt' />
+						</td>
+					</tr>
+					<tr>
+						<td>Ievadiet gadu, kura nosaukumus rādīt:</td>
+						<td>
+								<input type='text' name='year' id='year' />
+						</td>
+					</tr>
+					</form>
 				</table>
 				<hr>
 			</td>
