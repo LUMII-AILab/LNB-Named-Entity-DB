@@ -66,7 +66,7 @@
 											<div class="searchBox"> 
 												<div class="heading">Nosaukumu datu bāze</div>
 												<div class="data">
-													<a href="http://lvadb.lndb.lv/namedEntityDB/rdf_xml">RDF/XML</a>
+													<a href="http://lvadb.lndb.lv/namedEntityDB/rdf_xml">Datu servisi</a>
 													<a href="http://lvadb.lndb.lv/namedEntityDB/">Meklēšana</a>
 													<?php if ($this->session->userdata("logged_in")) :?>
 														<a href="/namedEntityDB/add_new_entity">Pievienot jaunu objektu</a>
