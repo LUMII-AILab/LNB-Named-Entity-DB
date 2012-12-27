@@ -78,7 +78,7 @@
 		<tr>
 			<td>
 				<table style='font-size: 11px; '>
-					<form action='/namedEntityDB/time_dict' method='POST'>
+					<form action='/namedEntityDB/to_hist' method='POST'>
 					<tr>
 						<td>Ievadiet nosaukumu laika jūtīgai meklēšanai:</td>
 						<td>
